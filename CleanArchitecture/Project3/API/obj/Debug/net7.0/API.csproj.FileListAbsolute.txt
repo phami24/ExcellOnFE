@@ -148,11 +148,9 @@ C:\Users\LAPTOP\Documents\ExcellOn\CleanArchitecture\Project3\API\bin\Debug\net7
 C:\Users\LAPTOP\Documents\ExcellOn\CleanArchitecture\Project3\API\bin\Debug\net7.0\Application.dll
 C:\Users\LAPTOP\Documents\ExcellOn\CleanArchitecture\Project3\API\bin\Debug\net7.0\Domain.dll
 C:\Users\LAPTOP\Documents\ExcellOn\CleanArchitecture\Project3\API\bin\Debug\net7.0\Infrastructure.dll
-C:\Users\LAPTOP\Documents\ExcellOn\CleanArchitecture\Project3\API\bin\Debug\net7.0\Shared.dll
 C:\Users\LAPTOP\Documents\ExcellOn\CleanArchitecture\Project3\API\bin\Debug\net7.0\Application.pdb
 C:\Users\LAPTOP\Documents\ExcellOn\CleanArchitecture\Project3\API\bin\Debug\net7.0\Infrastructure.pdb
 C:\Users\LAPTOP\Documents\ExcellOn\CleanArchitecture\Project3\API\bin\Debug\net7.0\Domain.pdb
-C:\Users\LAPTOP\Documents\ExcellOn\CleanArchitecture\Project3\API\bin\Debug\net7.0\Shared.pdb
 C:\Users\LAPTOP\Documents\ExcellOn\CleanArchitecture\Project3\API\obj\Debug\net7.0\API.csproj.AssemblyReference.cache
 C:\Users\LAPTOP\Documents\ExcellOn\CleanArchitecture\Project3\API\obj\Debug\net7.0\API.GeneratedMSBuildEditorConfig.editorconfig
 C:\Users\LAPTOP\Documents\ExcellOn\CleanArchitecture\Project3\API\obj\Debug\net7.0\API.AssemblyInfoInputs.cache
@@ -174,3 +172,4 @@ C:\Users\LAPTOP\Documents\ExcellOn\CleanArchitecture\Project3\API\obj\Debug\net7
 C:\Users\LAPTOP\Documents\ExcellOn\CleanArchitecture\Project3\API\obj\Debug\net7.0\API.pdb
 C:\Users\LAPTOP\Documents\ExcellOn\CleanArchitecture\Project3\API\obj\Debug\net7.0\API.genruntimeconfig.cache
 C:\Users\LAPTOP\Documents\ExcellOn\CleanArchitecture\Project3\API\obj\Debug\net7.0\ref\API.dll
+C:\Users\LAPTOP\Documents\ExcellOn\CleanArchitecture\Project3\API\bin\Debug\net7.0\Microsoft.Extensions.DependencyInjection.Abstractions.dll

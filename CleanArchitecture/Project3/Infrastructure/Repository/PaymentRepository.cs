@@ -9,7 +9,7 @@ namespace Infrastructure.Repository
 {
     public class PaymentRepository : GenericRepository<Payment, int>, IPaymentRepository
     {
-        public PaymentRepository(AppDbContext context, ILogger logger) : base(context, logger)
+        public PaymentRepository(AppDbContext context, ILogger<PaymentRepository> logger) : base(context, logger)
         {
         }
         public override async Task<Payment?> GetById(int id)

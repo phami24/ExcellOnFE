@@ -9,8 +9,32 @@ namespace Infrastructure.Repository
 {
     public class DepartmentRepository : GenericRepository<Department, int>, IDepartmentRepository
     {
-        public DepartmentRepository(AppDbContext context, ILogger logger) : base(context, logger)
+        public DepartmentRepository(AppDbContext context, ILogger<DepartmentRepository> logger) : base(context, logger)
         {
+        }
+
+        public async Task<bool> AddEmployee(Employee employee, int departmentId)
+        {
+
+            try
+            {
+                var department = await _context.Departments.AsNoTracking().FirstOrDefaultAsync(d => d.Id == departmentId);
+                if (department == null)
+                {
+                    return false;
+                }
+                if (employee != null)
+                {
+                    department.Employees.Add(employee);
+                }
+
+                return true;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.ToString());
+                return false;
+            }
         }
 
         public override async Task<Department?> GetById(int id)

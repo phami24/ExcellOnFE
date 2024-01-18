@@ -1,5 +1,7 @@
 using Application;
 using Infrastructure;
+using Infrastructure.Data;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -13,6 +15,12 @@ builder.Services
     .AddInFrastructure(builder.Configuration);
 
 var app = builder.Build();
+using (var scope = app.Services.CreateScope())
+{
+    var service = scope.ServiceProvider;
+
+    SeedData.Initialize(service);
+}
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

@@ -9,9 +9,23 @@ namespace Infrastructure.Repository
 {
     public class EmployeeRepository : GenericRepository<Employee, int>, IEmployeeRepository
     {
-        public EmployeeRepository(AppDbContext context, ILogger logger) : base(context, logger)
+        public EmployeeRepository(AppDbContext context, ILogger<EmployeeRepository> logger) : base(context, logger)
         {
         }
+
+        public async Task<Employee> GetByEmail(string email)
+        {
+            try
+            {
+                return await _context.Employees.AsNoTracking().FirstOrDefaultAsync(e => e.Email == email);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.ToString());
+                return null;
+            }
+        }
+
         public override async Task<Employee?> GetById(int id)
         {
             try

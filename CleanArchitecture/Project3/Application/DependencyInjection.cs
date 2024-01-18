@@ -13,7 +13,6 @@ namespace Application
                 configuration.RegisterServicesFromAssembly(assembly));
 
             services.AddValidatorsFromAssembly(assembly);
-
             return services;
         }
     }

@@ -12,7 +12,7 @@ namespace Domain.Entities
         public string DepartmentName { get; set; }
         [Required]
         public string DepartmentDescription { get; set; }
-        public ICollection<Employee> Employees { get; set; }
+        public ICollection<Employee> Employees { get; set; } = new List<Employee>();
 
     }
 }

@@ -9,7 +9,7 @@ namespace Infrastructure.Repository
 {
     internal class ServiceRepository : GenericRepository<Service, int>, IServiceRepository
     {
-        public ServiceRepository(AppDbContext context, ILogger logger) : base(context, logger)
+        public ServiceRepository(AppDbContext context, ILogger<ServiceRepository> logger) : base(context, logger)
         {
         }
 

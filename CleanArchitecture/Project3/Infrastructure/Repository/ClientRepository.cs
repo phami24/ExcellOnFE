@@ -9,7 +9,7 @@ namespace Infrastructure.Repository
 {
     public class ClientRepository : GenericRepository<Client, int>, IClientRepository
     {
-        public ClientRepository(AppDbContext context, ILogger logger) : base(context, logger)
+        public ClientRepository(AppDbContext context, ILogger<ClientRepository> logger) : base(context, logger)
         {
         }
         public override async Task<Client?> GetById(int id)

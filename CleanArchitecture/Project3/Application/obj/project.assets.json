@@ -87,16 +87,6 @@
         "runtime": {
           "bin/placeholder/Domain.dll": {}
         }
-      },
-      "Shared/1.0.0": {
-        "type": "project",
-        "framework": ".NETCoreApp,Version=v7.0",
-        "compile": {
-          "bin/placeholder/Shared.dll": {}
-        },
-        "runtime": {
-          "bin/placeholder/Shared.dll": {}
-        }
       }
     }
   },
@@ -200,19 +190,13 @@
       "type": "project",
       "path": "../Domain/Domain.csproj",
       "msbuildProject": "../Domain/Domain.csproj"
-    },
-    "Shared/1.0.0": {
-      "type": "project",
-      "path": "../Shared/Shared.csproj",
-      "msbuildProject": "../Shared/Shared.csproj"
     }
   },
   "projectFileDependencyGroups": {
     "net7.0": [
       "Domain >= 1.0.0",
       "FluentValidation.DependencyInjectionExtensions >= 11.5.0",
-      "MediatR >= 12.0.1",
-      "Shared >= 1.0.0"
+      "MediatR >= 12.0.1"
     ]
   },
   "packageFolders": {
@@ -244,9 +228,6 @@
           "projectReferences": {
             "C:\\Users\\LAPTOP\\Documents\\ExcellOn\\CleanArchitecture\\Project3\\Domain\\Domain.csproj": {
               "projectPath": "C:\\Users\\LAPTOP\\Documents\\ExcellOn\\CleanArchitecture\\Project3\\Domain\\Domain.csproj"
-            },
-            "C:\\Users\\LAPTOP\\Documents\\ExcellOn\\CleanArchitecture\\Project3\\Shared\\Shared.csproj": {
-              "projectPath": "C:\\Users\\LAPTOP\\Documents\\ExcellOn\\CleanArchitecture\\Project3\\Shared\\Shared.csproj"
             }
           }
         }

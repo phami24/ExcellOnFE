@@ -9,7 +9,7 @@ namespace Infrastructure.Repository
 {
     public class ReportRepository : GenericRepository<Report, int>, IReportRepository
     {
-        public ReportRepository(AppDbContext context, ILogger logger) : base(context, logger)
+        public ReportRepository(AppDbContext context, ILogger<ReportRepository> logger) : base(context, logger)
         {
         }
         public override async Task<Report?> GetById(int id)
