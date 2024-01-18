@@ -1,0 +1,13 @@
+{
+  "version": 2,
+  "dgSpecHash": "pk+FSqXWhxD6sXyvap5j9oL7hVgDxUt/fXhnE7sqPVByQvqmRB+YclEPAlMY7N/1+7Q0JjJ/ZHQXkSQHRscXNQ==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\LAPTOP\\Documents\\ExcellOn\\CleanArchitecture\\Project3\\Architecture.Test\\Architecture.Test.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\LAPTOP\\.nuget\\packages\\mono.cecil\\0.11.3\\mono.cecil.0.11.3.nupkg.sha512",
+    "C:\\Users\\LAPTOP\\.nuget\\packages\\netarchtest.rules\\1.3.2\\netarchtest.rules.1.3.2.nupkg.sha512",
+    "C:\\Users\\LAPTOP\\.nuget\\packages\\xunit.abstractions\\2.0.3\\xunit.abstractions.2.0.3.nupkg.sha512",
+    "C:\\Users\\LAPTOP\\.nuget\\packages\\xunit.extensibility.core\\2.6.6\\xunit.extensibility.core.2.6.6.nupkg.sha512"
+  ],
+  "logs": []
+}

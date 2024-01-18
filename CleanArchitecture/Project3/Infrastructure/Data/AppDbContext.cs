@@ -16,5 +16,49 @@ namespace Infrastructure.Data
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
         {
         }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Employee>()
+                .HasOne(e => e.Department)
+                .WithMany(d => d.Employees)
+                .HasForeignKey(e => e.DepartmentId);
+
+            modelBuilder.Entity<Department>()
+                .HasMany(d => d.Employees)
+                .WithOne(e => e.Department)
+                .HasForeignKey(e => e.DepartmentId);
+
+            modelBuilder.Entity<Client>()
+                .HasMany(c => c.ClientServices)
+                .WithOne(cs => cs.Client)
+                .HasForeignKey(cs => cs.ClientId);
+
+            modelBuilder.Entity<Client>()
+                .HasMany(c => c.Payments)
+                .WithOne(p => p.Client)
+                .HasForeignKey(p => p.ClientId);
+
+            modelBuilder.Entity<ClientService>()
+                .HasOne(cs => cs.Client)
+                .WithMany(c => c.ClientServices)
+                .HasForeignKey(cs => cs.ClientId);
+
+            modelBuilder.Entity<Payment>()
+                .HasOne(p => p.Client)
+                .WithMany(c => c.Payments)
+                .HasForeignKey(p => p.ClientId);
+
+            modelBuilder.Entity<Service>()
+                .HasMany(s => s.ServicesCharges)
+                .WithOne(sc => sc.Service)
+                .HasForeignKey(sc => sc.ServiceId);
+
+            modelBuilder.Entity<ServiceCharges>()
+                .HasOne(sc => sc.Service)
+                .WithMany(s => s.ServicesCharges)
+                .HasForeignKey(sc => sc.ServiceId);
+            base.OnModelCreating(modelBuilder);
+        }
     }
 }

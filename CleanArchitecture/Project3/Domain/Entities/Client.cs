@@ -14,6 +14,7 @@ namespace Domain.Entities
         public string FirstName { get; set; }
         [Required]
         public string LastName { get; set; }
+
         public ICollection<ClientService> ClientServices { get; set; }
         public ICollection<Payment> Payments { get; set; }
     }

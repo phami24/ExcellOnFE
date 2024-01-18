@@ -1,4 +1,5 @@
-﻿using Domain.Abstraction;
+﻿using Domain.Interfaces;
+using Domain.Repositories;
 using Infrastructure.Data;
 using Infrastructure.Repository;
 using Microsoft.EntityFrameworkCore;
@@ -15,7 +16,14 @@ namespace Infrastructure
                 options => options.UseSqlServer(configuration.GetConnectionString("DefaultConnection"),
                 b => b.MigrationsAssembly(typeof(AppDbContext).Assembly.FullName)),
                 ServiceLifetime.Transient);
-
+            services.AddScoped<IClientRepository, ClientRepository>();
+            services.AddScoped<IClientServiceRepository, ClientServiceRepository>();
+            services.AddScoped<IDepartmentRepository, DepartmentRepository>();
+            services.AddScoped<IEmployeeRepository, EmployeeRepository>();
+            services.AddScoped<IPaymentRepository, PaymentRepository>();
+            services.AddScoped<IReportRepository, ReportRepository>();
+            services.AddScoped<IServiceChargesRepository, ServiceChargesRepository>();
+            services.AddScoped<IServiceRepository, ServiceRepository>();
             return services;
         }
     }

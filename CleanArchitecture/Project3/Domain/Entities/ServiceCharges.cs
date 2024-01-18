@@ -10,11 +10,15 @@ namespace Domain.Entities
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int ServiceChargesId { get; set; }
         [Required]
-        public  string ServiceChargesName { get; set; }
+        public string ServiceChargesName { get; set; }
         [Required]
-        public double Price{ get; set; }
+        public double Price { get; set; }
         [Required]
         public string ServiceChargesDescription { get; set; }
+        [Required]
+        public int ServiceId { get; set; }
+        [Required]
+        public Service Service { get; set; }
     }
 
 }

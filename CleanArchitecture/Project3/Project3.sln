@@ -5,15 +5,15 @@ VisualStudioVersion = 17.7.34031.279
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{83A47166-8379-499D-9A03-A86E9F6E8212}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Domain", "Domain\Domain.csproj", "{F05B4C60-F75B-44BF-93FF-ACA861A2CA9F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Domain", "Domain\Domain.csproj", "{F05B4C60-F75B-44BF-93FF-ACA861A2CA9F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Application", "Application\Application.csproj", "{5D43DFBB-126E-49E0-BCC2-BFB21373DCC9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Application", "Application\Application.csproj", "{5D43DFBB-126E-49E0-BCC2-BFB21373DCC9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infrastructure", "Infrastructure\Infrastructure.csproj", "{ED8EF1C5-7420-4A5A-8156-68BFAF338112}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infrastructure", "Infrastructure\Infrastructure.csproj", "{ED8EF1C5-7420-4A5A-8156-68BFAF338112}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "API", "API\API.csproj", "{9BF9AA4B-221A-45A6-84F8-22E5C664414B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "API", "API\API.csproj", "{9BF9AA4B-221A-45A6-84F8-22E5C664414B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shared", "Shared\Shared.csproj", "{7083596F-5CA5-44CE-87B0-7CA77CAAA079}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shared", "Shared\Shared.csproj", "{7083596F-5CA5-44CE-87B0-7CA77CAAA079}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
