@@ -3,8 +3,8 @@ using MediatR;
 
 namespace Application.Employee.Commands.DeleteEmployee
 {
-    public class DeleteEmployeeCommand : IRequest<DeleteEmployeeDto>
+    public class DeleteEmployeeCommand : IRequest<bool>
     {
-        public DeleteEmployeeDto DeleteEmployeeDto { get; set; }
+        public int EmployeeId { get; set; }
     }
 }

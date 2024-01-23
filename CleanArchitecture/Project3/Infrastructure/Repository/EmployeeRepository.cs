@@ -38,5 +38,22 @@ namespace Infrastructure.Repository
                 return null;
             }
         }
+
+        public async Task<ICollection<Employee>> GetByName(string firstName, string lastName)
+        {
+            try
+            {
+                return await _context.Employees
+                    .AsNoTracking()
+                    .Where(e => e.FirstName == firstName || e.LastName == lastName)
+                    .ToListAsync();
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, "Error occurred while trying to get employees by name.");
+                return new List<Employee>();
+            }
+        }
+
     }
 }

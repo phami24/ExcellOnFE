@@ -13,6 +13,14 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Domain\Domain.csproj" />
+    <ProjectReference Include="..\Infrastructure\Infrastructure.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Client\Command\CreateClient\" />
+    <Folder Include="Client\Command\DeleteClient\" />
+    <Folder Include="Client\Command\UpdateClient\" />
+    <Folder Include="Client\Queries\" />
   </ItemGroup>
 
 </Project>

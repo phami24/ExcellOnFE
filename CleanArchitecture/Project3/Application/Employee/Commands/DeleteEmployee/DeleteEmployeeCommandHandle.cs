@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Application.Employee.Commands.DeleteEmployee
 {
-    public class DeleteEmployeeCommandHandle : IRequestHandler<DeleteEmployeeCommand, DeleteEmployeeDto>
+    public class DeleteEmployeeCommandHandle : IRequestHandler<DeleteEmployeeCommand, bool>
     {
         public readonly IEmployeeRepository _employeeRepository;
         public readonly IDepartmentRepository _departmentRepository;
@@ -21,21 +21,22 @@ namespace Application.Employee.Commands.DeleteEmployee
             _departmentRepository = departmentRepository;
         }
 
-        public async Task<DeleteEmployeeDto> Handle(DeleteEmployeeCommand request, CancellationToken cancellationToken)
+        public async Task<bool> Handle(DeleteEmployeeCommand request, CancellationToken cancellationToken)
         {
             try
             {
-                var employeeDeleted = await _employeeRepository.GetById(request.DeleteEmployeeDto.Id);
+                var employeeDeleted = await _employeeRepository.GetById(request.EmployeeId);
                 if (employeeDeleted != null)
                 {
                     await _employeeRepository.Delete(employeeDeleted);
+                    return true;
                 }
-                return request.DeleteEmployeeDto;
+                return false;
             }
             catch (Exception ex)
             {
                 Console.WriteLine(ex.ToString());
-                return null;
+                return false;
             }
         }
     }

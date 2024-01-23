@@ -21,7 +21,7 @@ namespace Application.DTOs.Employee
         public string Phone { get; set; }
         [Required]
         public int DepartmentId { get; set; }
-        [Required]
         public string Avatar { get; set; }
+        public string Password { get; set; }
     }
 }

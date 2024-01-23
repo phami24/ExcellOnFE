@@ -4,7 +4,7 @@ using MediatR;
 
 namespace Application.Employee.Queries.GetAllEmployee
 {
-    public class GetAllEmployeesQueryHandle : IRequestHandler<GetAllEmployeeQuery, ICollection<GetAllEmployeeDto>>
+    public class GetAllEmployeesQueryHandle : IRequestHandler<GetAllEmployeeQuery, ICollection<GetEmployeeDto>>
     {
         public readonly IEmployeeRepository _employeeRepository;
         public GetAllEmployeesQueryHandle(IEmployeeRepository employeeRepository)
@@ -12,13 +12,13 @@ namespace Application.Employee.Queries.GetAllEmployee
             _employeeRepository = employeeRepository;
         }
 
-        public async Task<ICollection<GetAllEmployeeDto>> Handle(GetAllEmployeeQuery request, CancellationToken cancellationToken)
+        public async Task<ICollection<GetEmployeeDto>> Handle(GetAllEmployeeQuery request, CancellationToken cancellationToken)
         {
             var employees = await _employeeRepository.All();
-            var employeesDto = new List<GetAllEmployeeDto>();
+            var employeesDto = new List<GetEmployeeDto>();
             foreach (Domain.Entities.Employee e in employees)
             {
-                var employeeDto = new GetAllEmployeeDto()
+                var employeeDto = new GetEmployeeDto()
                 {
                     Id = e.EmployeeId,
                     FirstName = e.FirstName,

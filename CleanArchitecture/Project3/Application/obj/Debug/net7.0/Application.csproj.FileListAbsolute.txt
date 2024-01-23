@@ -30,3 +30,5 @@ C:\Users\LAPTOP\Documents\ExcellOn\CleanArchitecture\Project3\Application\obj\De
 C:\Users\LAPTOP\Documents\ExcellOn\CleanArchitecture\Project3\Application\obj\Debug\net7.0\refint\Application.dll
 C:\Users\LAPTOP\Documents\ExcellOn\CleanArchitecture\Project3\Application\obj\Debug\net7.0\Application.pdb
 C:\Users\LAPTOP\Documents\ExcellOn\CleanArchitecture\Project3\Application\obj\Debug\net7.0\ref\Application.dll
+C:\Users\LAPTOP\Documents\ExcellOn\CleanArchitecture\Project3\Application\bin\Debug\net7.0\Infrastructure.dll
+C:\Users\LAPTOP\Documents\ExcellOn\CleanArchitecture\Project3\Application\bin\Debug\net7.0\Infrastructure.pdb

@@ -1,5 +1,6 @@
 using Application;
 using Infrastructure;
+using Infrastructure.Config;
 using Infrastructure.Data;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -14,12 +15,16 @@ builder.Services
     .AddApplication()
     .AddInFrastructure(builder.Configuration);
 
+builder.Services.Configure<JwtConfig>(builder.Configuration.GetSection("JwtConfig"));
+
 var app = builder.Build();
+
 using (var scope = app.Services.CreateScope())
 {
-    var service = scope.ServiceProvider;
+    var services = scope.ServiceProvider;
 
-    SeedData.Initialize(service);
+    SeedData.Initialize(services);
+    AuthSeedData.Initialize(services);
 }
 
 // Configure the HTTP request pipeline.

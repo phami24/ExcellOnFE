@@ -3,7 +3,7 @@ using MediatR;
 
 namespace Application.Employee.Queries.GetAllEmployee
 {
-    public class GetAllEmployeeQuery : IRequest<ICollection<GetAllEmployeeDto>>
+    public class GetAllEmployeeQuery : IRequest<ICollection<GetEmployeeDto>>
     {
     }
 }

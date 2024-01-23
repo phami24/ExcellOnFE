@@ -28,6 +28,10 @@ namespace Application.Employee.Commands.CreateEmployee
                     DepartmentId = request.EmployeeDto.DepartmentId,
                     Dob = request.EmployeeDto.Dob
                 };
+                if (request.EmployeeDto.Avatar == null)
+                {
+                    newEmployee.Avatar = "defautAvatar.png";
+                }
                 Console.WriteLine(newEmployee);
                 bool isCreate = await _employeeRepository.Add(newEmployee);
                 if (isCreate)
