@@ -26,7 +26,7 @@ namespace API.Controllers
 
         [HttpPost]
         [Route("EmployeeRegister")]
-        public async Task<IActionResult> EmployeeRegister([FromBody] CreateEmployeeDto request)
+        public async Task<IActionResult> EmployeeRegister([FromForm] CreateEmployeeDto request)
         {
             if (ModelState.IsValid)
             {
@@ -48,7 +48,8 @@ namespace API.Controllers
                 {
                     var createEmployeeCommand = new CreateEmployeeCommand
                     {
-                        EmployeeDto = request
+                        EmployeeDto = request,
+
                     };
                     var isAddRole = await _userManager.AddToRoleAsync(newUser, "Employee");
                     if (isAddRole.Succeeded)

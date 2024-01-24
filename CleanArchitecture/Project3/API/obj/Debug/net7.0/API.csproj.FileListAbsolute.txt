@@ -94,3 +94,5 @@ C:\Users\LAPTOP\Documents\ExcellOn\CleanArchitecture\Project3\API\obj\Debug\net7
 C:\Users\LAPTOP\Documents\ExcellOn\CleanArchitecture\Project3\API\obj\Debug\net7.0\API.pdb
 C:\Users\LAPTOP\Documents\ExcellOn\CleanArchitecture\Project3\API\obj\Debug\net7.0\API.genruntimeconfig.cache
 C:\Users\LAPTOP\Documents\ExcellOn\CleanArchitecture\Project3\API\obj\Debug\net7.0\ref\API.dll
+C:\Users\LAPTOP\Documents\ExcellOn\CleanArchitecture\Project3\API\bin\Debug\net7.0\CloudinaryDotNet.dll
+C:\Users\LAPTOP\Documents\ExcellOn\CleanArchitecture\Project3\API\bin\Debug\net7.0\Newtonsoft.Json.dll

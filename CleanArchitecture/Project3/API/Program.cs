@@ -16,16 +16,6 @@ builder.Services
     .AddInFrastructure(builder.Configuration);
 
 builder.Services.Configure<JwtConfig>(builder.Configuration.GetSection("JwtConfig"));
-
-var app = builder.Build();
-
-using (var scope = app.Services.CreateScope())
-{
-    var services = scope.ServiceProvider;
-
-    SeedData.Initialize(services);
-    AuthSeedData.Initialize(services);
-}
 var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 builder.Services.AddCors(options =>
 {
@@ -36,6 +26,16 @@ builder.Services.AddCors(options =>
         policy.AllowAnyMethod();
     });
 });
+var app = builder.Build();
+
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+
+    SeedData.Initialize(services);
+    AuthSeedData.Initialize(services);
+}
+
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

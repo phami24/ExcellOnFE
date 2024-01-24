@@ -38,6 +38,7 @@ namespace Infrastructure
             services.AddScoped<IServiceChargesRepository, ServiceChargesRepository>();
             services.AddScoped<IServiceRepository, ServiceRepository>();
             services.AddScoped<IJwtService, JwtService>();
+            services.AddScoped<ICloudinaryService, CloudinaryService>();
 
             services.AddDefaultIdentity<IdentityUser>(options =>
                 options.SignIn.RequireConfirmedAccount = false)
