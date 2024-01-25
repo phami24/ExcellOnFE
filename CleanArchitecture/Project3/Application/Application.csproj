@@ -21,7 +21,6 @@
 		<Folder Include="Client\Commands\DeleteClient\" />
 		<Folder Include="Client\Commands\UpdateClient\" />
 		<Folder Include="Client\Queries\GetAllClient\" />
-		<Folder Include="ClientServices\" />
 	</ItemGroup>
 
 </Project>
