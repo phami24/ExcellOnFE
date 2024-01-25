@@ -14,6 +14,12 @@ namespace Domain.Entities
         public string FirstName { get; set; }
         [Required]
         public string LastName { get; set; }
+        [Required]
+        public string Dob { get; set; }
+        [Required]
+        public string Email { get; set; }
+        [Required]
+        public string Phone { get; set; }
 
         public ICollection<ClientService> ClientServices { get; set; }
         public ICollection<Payment> Payments { get; set; }
