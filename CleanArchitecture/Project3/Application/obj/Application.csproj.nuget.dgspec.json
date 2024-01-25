@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\LAPTOP\\Documents\\ExcellOn\\CleanArchitecture\\Project3\\Application\\Application.csproj": {}
+    "H:\\e-Project3\\Excell-On-Service\\ExcellOn\\CleanArchitecture\\Project3\\Application\\Application.csproj": {}
   },
   "projects": {
-    "C:\\Users\\LAPTOP\\Documents\\ExcellOn\\CleanArchitecture\\Project3\\Application\\Application.csproj": {
+    "H:\\e-Project3\\Excell-On-Service\\ExcellOn\\CleanArchitecture\\Project3\\Application\\Application.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\LAPTOP\\Documents\\ExcellOn\\CleanArchitecture\\Project3\\Application\\Application.csproj",
+        "projectUniqueName": "H:\\e-Project3\\Excell-On-Service\\ExcellOn\\CleanArchitecture\\Project3\\Application\\Application.csproj",
         "projectName": "Application",
-        "projectPath": "C:\\Users\\LAPTOP\\Documents\\ExcellOn\\CleanArchitecture\\Project3\\Application\\Application.csproj",
-        "packagesPath": "C:\\Users\\LAPTOP\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\LAPTOP\\Documents\\ExcellOn\\CleanArchitecture\\Project3\\Application\\obj\\",
+        "projectPath": "H:\\e-Project3\\Excell-On-Service\\ExcellOn\\CleanArchitecture\\Project3\\Application\\Application.csproj",
+        "packagesPath": "C:\\Users\\HP\\.nuget\\packages\\",
+        "outputPath": "H:\\e-Project3\\Excell-On-Service\\ExcellOn\\CleanArchitecture\\Project3\\Application\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\LAPTOP\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\HP\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -28,11 +28,11 @@
           "net7.0": {
             "targetAlias": "net7.0",
             "projectReferences": {
-              "C:\\Users\\LAPTOP\\Documents\\ExcellOn\\CleanArchitecture\\Project3\\Domain\\Domain.csproj": {
-                "projectPath": "C:\\Users\\LAPTOP\\Documents\\ExcellOn\\CleanArchitecture\\Project3\\Domain\\Domain.csproj"
+              "H:\\e-Project3\\Excell-On-Service\\ExcellOn\\CleanArchitecture\\Project3\\Domain\\Domain.csproj": {
+                "projectPath": "H:\\e-Project3\\Excell-On-Service\\ExcellOn\\CleanArchitecture\\Project3\\Domain\\Domain.csproj"
               },
-              "C:\\Users\\LAPTOP\\Documents\\ExcellOn\\CleanArchitecture\\Project3\\Infrastructure\\Infrastructure.csproj": {
-                "projectPath": "C:\\Users\\LAPTOP\\Documents\\ExcellOn\\CleanArchitecture\\Project3\\Infrastructure\\Infrastructure.csproj"
+              "H:\\e-Project3\\Excell-On-Service\\ExcellOn\\CleanArchitecture\\Project3\\Infrastructure\\Infrastructure.csproj": {
+                "projectPath": "H:\\e-Project3\\Excell-On-Service\\ExcellOn\\CleanArchitecture\\Project3\\Infrastructure\\Infrastructure.csproj"
               }
             }
           }
@@ -72,21 +72,21 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.401\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.400\\RuntimeIdentifierGraph.json"
         }
       }
     },
-    "C:\\Users\\LAPTOP\\Documents\\ExcellOn\\CleanArchitecture\\Project3\\Domain\\Domain.csproj": {
+    "H:\\e-Project3\\Excell-On-Service\\ExcellOn\\CleanArchitecture\\Project3\\Domain\\Domain.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\LAPTOP\\Documents\\ExcellOn\\CleanArchitecture\\Project3\\Domain\\Domain.csproj",
+        "projectUniqueName": "H:\\e-Project3\\Excell-On-Service\\ExcellOn\\CleanArchitecture\\Project3\\Domain\\Domain.csproj",
         "projectName": "Domain",
-        "projectPath": "C:\\Users\\LAPTOP\\Documents\\ExcellOn\\CleanArchitecture\\Project3\\Domain\\Domain.csproj",
-        "packagesPath": "C:\\Users\\LAPTOP\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\LAPTOP\\Documents\\ExcellOn\\CleanArchitecture\\Project3\\Domain\\obj\\",
+        "projectPath": "H:\\e-Project3\\Excell-On-Service\\ExcellOn\\CleanArchitecture\\Project3\\Domain\\Domain.csproj",
+        "packagesPath": "C:\\Users\\HP\\.nuget\\packages\\",
+        "outputPath": "H:\\e-Project3\\Excell-On-Service\\ExcellOn\\CleanArchitecture\\Project3\\Domain\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\LAPTOP\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\HP\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -127,21 +127,21 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.401\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.400\\RuntimeIdentifierGraph.json"
         }
       }
     },
-    "C:\\Users\\LAPTOP\\Documents\\ExcellOn\\CleanArchitecture\\Project3\\Infrastructure\\Infrastructure.csproj": {
+    "H:\\e-Project3\\Excell-On-Service\\ExcellOn\\CleanArchitecture\\Project3\\Infrastructure\\Infrastructure.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\LAPTOP\\Documents\\ExcellOn\\CleanArchitecture\\Project3\\Infrastructure\\Infrastructure.csproj",
+        "projectUniqueName": "H:\\e-Project3\\Excell-On-Service\\ExcellOn\\CleanArchitecture\\Project3\\Infrastructure\\Infrastructure.csproj",
         "projectName": "Infrastructure",
-        "projectPath": "C:\\Users\\LAPTOP\\Documents\\ExcellOn\\CleanArchitecture\\Project3\\Infrastructure\\Infrastructure.csproj",
-        "packagesPath": "C:\\Users\\LAPTOP\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\LAPTOP\\Documents\\ExcellOn\\CleanArchitecture\\Project3\\Infrastructure\\obj\\",
+        "projectPath": "H:\\e-Project3\\Excell-On-Service\\ExcellOn\\CleanArchitecture\\Project3\\Infrastructure\\Infrastructure.csproj",
+        "packagesPath": "C:\\Users\\HP\\.nuget\\packages\\",
+        "outputPath": "H:\\e-Project3\\Excell-On-Service\\ExcellOn\\CleanArchitecture\\Project3\\Infrastructure\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\LAPTOP\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\HP\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -155,8 +155,8 @@
           "net7.0": {
             "targetAlias": "net7.0",
             "projectReferences": {
-              "C:\\Users\\LAPTOP\\Documents\\ExcellOn\\CleanArchitecture\\Project3\\Domain\\Domain.csproj": {
-                "projectPath": "C:\\Users\\LAPTOP\\Documents\\ExcellOn\\CleanArchitecture\\Project3\\Domain\\Domain.csproj"
+              "H:\\e-Project3\\Excell-On-Service\\ExcellOn\\CleanArchitecture\\Project3\\Domain\\Domain.csproj": {
+                "projectPath": "H:\\e-Project3\\Excell-On-Service\\ExcellOn\\CleanArchitecture\\Project3\\Domain\\Domain.csproj"
               }
             }
           }
@@ -228,7 +228,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.401\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.400\\RuntimeIdentifierGraph.json"
         }
       }
     }
