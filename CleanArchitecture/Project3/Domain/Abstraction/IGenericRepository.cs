@@ -8,6 +8,7 @@
         Task<bool> Update(T entity);
         Task<bool> Delete(T entity);
         Task<int> Count();
+        void Save();
         //Task<IEnumerable<T>> GetByPage(int page, int pageSize);
 
     }

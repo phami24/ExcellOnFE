@@ -7,5 +7,6 @@ namespace Domain.Interfaces
     {
         Task<Employee> GetByEmail(string email);
         Task<ICollection<Employee>> GetByName(string firstName, string lastName);
+        Task<List<Employee>> GetByDepartmentId(int departmentId);
     }
 }

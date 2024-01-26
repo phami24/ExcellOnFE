@@ -49,6 +49,10 @@ namespace Infrastructure.Common
         {
             return await _dbSet.CountAsync();
         }
+        public async void Save()
+        {
+            await _context.SaveChangesAsync();
+        }
 
         //public virtual async Task<IEnumerable<T>> GetAll(int page, int pageSize)
         //{

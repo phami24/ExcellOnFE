@@ -23,7 +23,6 @@ namespace Application.Employee.Queries.GetByName
         {
             try
             {
-
                 var employees = await _employeeRepository.GetByName(request.FirstName, request.LastName);
                 var employeesDto = new List<GetEmployeeDto>();
                 foreach (Domain.Entities.Employee e in employees)

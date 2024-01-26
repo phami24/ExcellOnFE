@@ -29,7 +29,6 @@ namespace Application.Employee.Commands.CreateEmployee
                 var result = _cloudinaryService.Upload(request.EmployeeDto.Avatar, fileName);
                 if (result != null)
                 {
-
                     filePath = result.Url.ToString();
                 }
                 var newEmployee = new Domain.Entities.Employee()
@@ -52,6 +51,7 @@ namespace Application.Employee.Commands.CreateEmployee
                 {
                     var employee = await _employeeRepository.GetByEmail(newEmployee.Email);
                     await _departmentRepository.AddEmployee(employee, employee.DepartmentId);
+                    _departmentRepository.Save();
                     return request.EmployeeDto;
                 }
 

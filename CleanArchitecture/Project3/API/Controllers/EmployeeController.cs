@@ -1,8 +1,12 @@
 ﻿using Application.DTOs.Employee;
 using Application.Employee.Commands.CreateEmployee;
+using Application.Employee.Commands.DeleteEmployee;
+using Application.Employee.Commands.UpdateEmployee;
 using Application.Employee.Queries.GetAllEmployee;
 using Application.Employee.Queries.GetByName;
+using Application.Employee.Queries.GetEmployeeByDepartmentId;
 using Application.Employee.Queries.GetEmployeeById;
+using Domain.Entities;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -71,6 +75,83 @@ namespace API.Controllers
             catch (Exception ex)
             {
                 return StatusCode(500, $"An error occurred while processing the request: {ex.Message}");
+            }
+        }
+
+        [HttpGet]
+        [Route("getByDepartmentId/{departmentId}")]
+        public async Task<IActionResult> GetByDepartmentId(int departmentId)
+        {
+            try
+            {
+                var query = new GetEmployeeByDepartmentQuery()
+                {
+                    Id = departmentId
+                };
+                var employees = await _mediator.Send(query);
+                if (employees != null)
+                {
+                    return Ok(employees);
+                }
+                else
+                {
+                    return NotFound($"Department with ID {departmentId} not found.");
+                }
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"An error occurred while processing the request: {ex.Message}");
+            }
+        }
+        [HttpPut]
+        [Route("Update")]
+        public async Task<IActionResult> UpdateEmp([FromForm] UpdateEmployeeDto request)
+        {
+            try
+            {
+                if (request.Id != 0)
+                {
+                    var command = new UpdateEmployeeCommand()
+                    {
+                        UpdateEmployeeDto = request
+                    };
+                    var employee = await _mediator.Send(command);
+                    if (employee != null)
+                    {
+
+                        return Ok(new { Employee = employee, Message = "Update success!" });
+                    }
+                    return BadRequest("Something wrong please try again!");
+                }
+                else
+                {
+                    return BadRequest("Invalid ClientId");
+                }
+
+
+
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal server error: {ex.Message}");
+            }
+        }
+        [HttpDelete]
+        [Route("Delete")]
+        public async Task<IActionResult> DeleteEmployee(int id)
+        {
+            try
+            {
+                var command = new DeleteEmployeeCommand()
+                {
+                    EmployeeId = id
+                };
+                var result = await _mediator.Send(command);
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal server error: {ex.Message}");
             }
         }
     }
