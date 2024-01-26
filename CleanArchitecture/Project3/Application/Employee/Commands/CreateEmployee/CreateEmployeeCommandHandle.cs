@@ -6,7 +6,7 @@ using MediatR;
 
 namespace Application.Employee.Commands.CreateEmployee
 {
-    internal class CreateEmployeeCommandHandle : IRequestHandler<CreateEmployeeCommand, CreateEmployeeDto>
+    public class CreateEmployeeCommandHandle : IRequestHandler<CreateEmployeeCommand, CreateEmployeeDto>
     {
         public readonly IEmployeeRepository _employeeRepository;
         public readonly IDepartmentRepository _departmentRepository;

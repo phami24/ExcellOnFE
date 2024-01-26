@@ -1,7 +1,10 @@
-﻿using Application.DTOs.Auth;
+﻿using Application.Client.Commands.CreateClient;
+using Application.DTOs.Auth;
+using Application.DTOs.Client;
 using Application.DTOs.Employee;
 using Application.DTOs.Response.AuthResponse;
 using Application.Employee.Commands.CreateEmployee;
+using Azure.Core;
 using Infrastructure.Services;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
@@ -71,6 +74,54 @@ namespace API.Controllers
             return BadRequest("Invalid request payload");
         }
 
+        [HttpPost]
+        [Route("client-register")]
+        public async Task<IActionResult> CreateClient([FromBody] CreateClientDto request)
+        {
+            if (ModelState.IsValid)
+            {
+                var userExiting = await _userManager.FindByEmailAsync(request.Email);
+                if (userExiting != null)
+                {
+                    return BadRequest("Email is already exits !");
+                }
+
+                var newUser = new IdentityUser()
+                {
+                    Email = request.Email,
+                    UserName = request.Email
+                };
+
+                var isCreate = await _userManager.CreateAsync(newUser, request.Password);
+
+                if (isCreate.Succeeded)
+                {
+                    var createClientCommand = new CreateClientCommand
+                    {
+                        ClientDto = request,
+
+                    };
+                    var isAddRole = await _userManager.AddToRoleAsync(newUser, "User");
+                    if (isAddRole.Succeeded)
+                    {
+                        await _mediator.Send(createClientCommand);
+                        var token = await _jwtService.GenerateJwtTokenAsync(newUser);
+                        return Ok(
+                            new EmployeeRegisterResponse()
+                            {
+                                Result = true,
+                                Token = token.ToString()
+                            }
+                        );
+                    }
+                    return BadRequest(isAddRole.Errors.Select(x => x.Description).ToList());
+                }
+                return BadRequest(isCreate.Errors.Select(x => x.Description).ToList());
+            }
+            return BadRequest("Invalid request payload");
+
+        }
+
 
         [HttpPost]
         [Route("Emp-Login")]
@@ -87,6 +138,35 @@ namespace API.Controllers
                 if (!roles.Contains("Admin") && !roles.Contains("Employee"))
                 {
                     return BadRequest("You don't have the required roles (Admin or Employee) to perform this action.");
+                }
+                var isPasswordValid = await _userManager.CheckPasswordAsync(existingUser, request.Password);
+                if (isPasswordValid)
+                {
+                    var token = await _jwtService.GenerateJwtTokenAsync(existingUser);
+                    return Ok(new LoginResponseDto()
+                    {
+                        Result = true,
+                        Token = token.ToString()
+                    }); ;
+                }
+            }
+            return BadRequest("Invalid request payload !");
+        }
+        [HttpPost]
+        [Route("client-login")]
+        public async Task<IActionResult> ClientLogin([FromBody] LoginRequestDto request)
+        {
+            if (ModelState.IsValid)
+            {
+                var existingUser = await _userManager.FindByEmailAsync(request.Email);
+                if (existingUser == null)
+                {
+                    return BadRequest("Invalid authentication");
+                }
+                var roles = await _userManager.GetRolesAsync(existingUser);
+                if (!roles.Contains("Admin") && !roles.Contains("User"))
+                {
+                    return BadRequest("You don't have the required roles (Admin or Customer) to perform this action.");
                 }
                 var isPasswordValid = await _userManager.CheckPasswordAsync(existingUser, request.Password);
                 if (isPasswordValid)
