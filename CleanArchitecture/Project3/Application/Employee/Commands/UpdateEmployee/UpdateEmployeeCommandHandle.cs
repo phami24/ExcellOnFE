@@ -38,6 +38,7 @@ namespace Application.Employee.Commands.UpdateEmployee
 
                     var updateEmployee = new Domain.Entities.Employee()
                     {
+                        EmployeeId = request.UpdateEmployeeDto.Id,
                         FirstName = request.UpdateEmployeeDto.FirstName,
                         LastName = request.UpdateEmployeeDto.LastName,
                         Avatar = filePath,
