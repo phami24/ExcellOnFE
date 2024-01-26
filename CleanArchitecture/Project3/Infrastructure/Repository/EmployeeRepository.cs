@@ -13,6 +13,19 @@ namespace Infrastructure.Repository
         {
         }
 
+        public async Task<List<Employee>> GetByDepartmentId(int departmentId)
+        {
+            try
+            {
+                return await _context.Employees.AsNoTracking().Where(e => e.DepartmentId == departmentId).ToListAsync();
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, "Error occurred while trying to get employees by name.");
+                return new List<Employee>();
+            }
+        }
+
         public async Task<Employee> GetByEmail(string email)
         {
             try

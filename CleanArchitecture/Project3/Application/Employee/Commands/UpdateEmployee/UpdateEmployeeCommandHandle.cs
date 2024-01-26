@@ -1,6 +1,8 @@
 ﻿using Application.DTOs.Employee;
 using Domain.Interfaces;
 using Domain.Repositories;
+using Infrastructure.Services;
+using Infrastructure.Services.Impl;
 using MediatR;
 
 namespace Application.Employee.Commands.UpdateEmployee
@@ -9,34 +11,48 @@ namespace Application.Employee.Commands.UpdateEmployee
     {
         public readonly IEmployeeRepository _employeeRepository;
         public readonly IDepartmentRepository _departmentRepository;
-        public UpdateEmployeeCommandHandle(IEmployeeRepository employeeRepository, IDepartmentRepository departmentRepository)
+        public readonly ICloudinaryService _cloudinaryService;
+        public UpdateEmployeeCommandHandle(
+            IEmployeeRepository employeeRepository,
+            IDepartmentRepository departmentRepository,
+            ICloudinaryService cloudinaryService)
         {
             _employeeRepository = employeeRepository;
             _departmentRepository = departmentRepository;
+            _cloudinaryService = cloudinaryService;
         }
         public async Task<UpdateEmployeeDto> Handle(UpdateEmployeeCommand request, CancellationToken cancellationToken)
         {
             try
             {
-                var newEmployee = new Domain.Entities.Employee()
+                string fileName = request.UpdateEmployeeDto.Email;
+                string filePath = "";
+                var result = _cloudinaryService.Upload(request.UpdateEmployeeDto.Avatar, fileName);
+                if (result != null)
                 {
-                    FirstName = request.UpdateEmployeeDto.FirstName,
-                    LastName = request.UpdateEmployeeDto.LastName,
-                    Avatar = request.UpdateEmployeeDto.Avatar,
-                    Email = request.UpdateEmployeeDto.Email,
-                    Phone = request.UpdateEmployeeDto.Phone,
-                    DepartmentId = request.UpdateEmployeeDto.DepartmentId,
-                    Dob = request.UpdateEmployeeDto.Dob
-                };
-                Console.WriteLine(newEmployee);
-                bool isCreate = await _employeeRepository.Add(newEmployee);
-                if (isCreate)
+                    filePath = result.Url.ToString();
+                }
+                var exitingEmployee = _employeeRepository.GetById(request.UpdateEmployeeDto.Id);
+                if (exitingEmployee != null)
                 {
-                    var employee = await _employeeRepository.GetByEmail(newEmployee.Email);
-                    await _departmentRepository.AddEmployee(employee, employee.DepartmentId);
+
+                    var updateEmployee = new Domain.Entities.Employee()
+                    {
+                        FirstName = request.UpdateEmployeeDto.FirstName,
+                        LastName = request.UpdateEmployeeDto.LastName,
+                        Avatar = filePath,
+                        Email = request.UpdateEmployeeDto.Email,
+                        Phone = request.UpdateEmployeeDto.Phone,
+                        DepartmentId = request.UpdateEmployeeDto.DepartmentId,
+                        Dob = request.UpdateEmployeeDto.Dob
+                    };
+                    await _employeeRepository.Update(updateEmployee);
                     return request.UpdateEmployeeDto;
                 }
-                return null;
+                else
+                {
+                    throw new Exception("Employee does not exit !");
+                }
             }
             catch (Exception ex)
             {

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -17,6 +18,6 @@ namespace Application.DTOs.Employee
         public string Email { get; set; }
         public string Phone { get; set; }
         public int DepartmentId { get; set; }
-        public string Avatar { get; set; }
+        public IFormFile Avatar { get; set; }
     }
 }

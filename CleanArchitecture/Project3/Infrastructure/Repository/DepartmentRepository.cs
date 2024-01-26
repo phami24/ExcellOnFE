@@ -26,6 +26,7 @@ namespace Infrastructure.Repository
                 if (employee != null)
                 {
                     department.Employees.Add(employee);
+
                 }
 
                 return true;
