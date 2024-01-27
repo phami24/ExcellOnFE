@@ -5,7 +5,6 @@ using Application.Service.Commands.UpdateService;
 using Application.Service.Queries.GetAllService;
 using Application.Service.Queries.GetServiceById;
 using MediatR;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers

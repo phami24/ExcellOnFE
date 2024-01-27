@@ -24,5 +24,22 @@ namespace Infrastructure.Repository
                 return null;
             }
         }
+
+        public async Task<List<Payment>> GetPaymentsByYear(int year)
+        {
+            try
+            {
+                return await _context.Payments
+                    .AsNoTracking()
+                    .Where(p => p.PaymentDate.Year == year)
+                    .ToListAsync();
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($"An error occurred while getting payments by year: {e}");
+                return new List<Payment>();
+            }
+        }
+
     }
 }

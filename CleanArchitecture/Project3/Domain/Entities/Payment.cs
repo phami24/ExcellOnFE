@@ -13,12 +13,14 @@ namespace Domain.Entities
         [Required]
         public decimal Amount { get; set; }
         [Required]
-        public string PaymentDate { get; set; }
+        public DateTime PaymentDate { get; set; }
         [Required]
         public string Status { get; set; }
         [Required]
         public int ClientId { get; set; }
         [Required]
         public Client Client { get; set; }
+        public DateTime CreatedAt { get; set; }
+        public DateTime UpdatedAt { get; set; }
     }
 }

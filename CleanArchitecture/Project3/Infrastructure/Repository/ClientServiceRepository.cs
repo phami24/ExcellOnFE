@@ -24,5 +24,22 @@ namespace Infrastructure.Repository
                 return null;
             }
         }
+        public async Task<int> GetTotalClientsByServiceId(int serviceId)
+        {
+            try
+            {
+                var totalClients = await _context.ClientServices
+                    .AsNoTracking()
+                    .Where(cs => cs.ServiceId == serviceId)
+                    .CountAsync();
+
+                return totalClients;
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($"An error occurred while getting total clients by ServiceId: {e}");
+                return 0;
+            }
+        }
     }
 }

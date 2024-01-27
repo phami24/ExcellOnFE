@@ -118,7 +118,6 @@ namespace API.Controllers
                     var employee = await _mediator.Send(command);
                     if (employee != null)
                     {
-
                         return Ok(new { Employee = employee, Message = "Update success!" });
                     }
                     return BadRequest("Something wrong please try again!");
