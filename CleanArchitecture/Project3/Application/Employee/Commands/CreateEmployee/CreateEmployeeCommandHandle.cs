@@ -1,4 +1,5 @@
 ﻿using Application.DTOs.Employee;
+using Domain.Abstraction;
 using Domain.Interfaces;
 using Domain.Repositories;
 using Infrastructure.Services;
@@ -8,16 +9,13 @@ namespace Application.Employee.Commands.CreateEmployee
 {
     public class CreateEmployeeCommandHandle : IRequestHandler<CreateEmployeeCommand, CreateEmployeeDto>
     {
-        public readonly IEmployeeRepository _employeeRepository;
-        public readonly IDepartmentRepository _departmentRepository;
-        public readonly ICloudinaryService _cloudinaryService;
+        private readonly IUnitOfWork _unitOfWork;
+        private readonly ICloudinaryService _cloudinaryService;
         public CreateEmployeeCommandHandle(
-            IEmployeeRepository employeeRepository,
-            IDepartmentRepository departmentRepository,
+            IUnitOfWork unitOfWork,
             ICloudinaryService cloudinaryService)
         {
-            _employeeRepository = employeeRepository;
-            _departmentRepository = departmentRepository;
+            _unitOfWork = unitOfWork;
             _cloudinaryService = cloudinaryService;
         }
         public async Task<CreateEmployeeDto> Handle(CreateEmployeeCommand request, CancellationToken cancellationToken)
@@ -46,12 +44,12 @@ namespace Application.Employee.Commands.CreateEmployee
                     newEmployee.Avatar = "defautAvatar.png";
                 }
                 Console.WriteLine(newEmployee);
-                bool isCreate = await _employeeRepository.Add(newEmployee);
+                bool isCreate = await _unitOfWork.Employees.Add(newEmployee);
                 if (isCreate)
                 {
-                    var employee = await _employeeRepository.GetByEmail(newEmployee.Email);
-                    await _departmentRepository.AddEmployee(employee, employee.DepartmentId);
-                    _departmentRepository.Save();
+                    var employee = await _unitOfWork.Employees.GetByEmail(newEmployee.Email);
+                    await _unitOfWork.Departments.AddEmployee(employee, employee.DepartmentId);
+                    await _unitOfWork.CompleteAsync();
                     return request.EmployeeDto;
                 }
 

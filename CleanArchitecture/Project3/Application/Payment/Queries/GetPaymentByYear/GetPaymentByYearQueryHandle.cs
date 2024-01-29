@@ -1,25 +1,21 @@
 ﻿using Application.DTOs.Payment;
+using Domain.Abstraction;
 using Domain.Interfaces;
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Application.Payment.Queries.GetPaymentByYear
 {
     public class GetPaymentByYearQueryHandle : IRequestHandler<GetPaymentByYearQuery, List<RevenueDto>>
     {
-        public IPaymentRepository _paymentRepository;
-        public GetPaymentByYearQueryHandle(IPaymentRepository paymentRepository)
+        public IUnitOfWork _unitOfWork;
+        public GetPaymentByYearQueryHandle(IUnitOfWork unitOfWork)
         {
-            _paymentRepository = paymentRepository;
+            _unitOfWork = unitOfWork;
         }
 
         public async Task<List<RevenueDto>> Handle(GetPaymentByYearQuery request, CancellationToken cancellationToken)
         {
-            List<Domain.Entities.Payment> payments = await _paymentRepository.GetPaymentsByYear(request.Year);
+            List<Domain.Entities.Payment> payments = await _unitOfWork.Payments.GetPaymentsByYear(request.Year);
             List<RevenueDto> revenueDtos = new List<RevenueDto>();
             foreach (var payment in payments)
             {

@@ -27,31 +27,24 @@ namespace Infrastructure.Common
         public virtual async Task<bool> Add(T entity)
         {
             await _dbSet.AddAsync(entity);
-            await _context.SaveChangesAsync();
             return true;
         }
 
         public virtual async Task<bool> Update(T entity)
         {
             _dbSet.Update(entity);
-            await _context.SaveChangesAsync();
             return true;
         }
 
         public virtual async Task<bool> Delete(T entity)
         {
             _dbSet.Remove(entity);
-            await _context.SaveChangesAsync();
             return true;
         }
 
         public virtual async Task<int> Count()
         {
             return await _dbSet.CountAsync();
-        }
-        public async void Save()
-        {
-            await _context.SaveChangesAsync();
         }
 
         //public virtual async Task<IEnumerable<T>> GetAll(int page, int pageSize)

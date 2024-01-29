@@ -1,24 +1,17 @@
 ﻿
 using Application.DTOs.ClientService;
-using Domain.Entities;
-using Domain.Interfaces;
-using Infrastructure.Services;
+using Domain.Abstraction;
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Application.ClientService.Commands.CreateClientService
 {
     public class CreateClientServiceCommandHandle : IRequestHandler<CreateClientServiceCommand, CreateClientServiceDto>
     {
-        private readonly IClientServiceRepository _clientServiceRepository;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public CreateClientServiceCommandHandle(IClientServiceRepository clientServiceRepository)
+        public CreateClientServiceCommandHandle(IUnitOfWork unitOfWork)
         {
-            _clientServiceRepository = clientServiceRepository;
+            _unitOfWork = unitOfWork;
         }
 
         public async Task<CreateClientServiceDto> Handle(CreateClientServiceCommand request, CancellationToken cancellationToken)
@@ -34,10 +27,11 @@ namespace Application.ClientService.Commands.CreateClientService
                     StartDay = request.ClientServiceDto.StartDay
                 };
 
-                bool isCreate = await _clientServiceRepository.Add(newClientService);
+                bool isCreate = await _unitOfWork.ClientServices.Add(newClientService);
 
                 if (isCreate)
                 {
+                    await _unitOfWork.CompleteAsync();
                     // Additional logic can be added here if needed
                     return request.ClientServiceDto;
                 }

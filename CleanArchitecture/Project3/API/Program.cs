@@ -26,6 +26,7 @@ builder.Services.AddCors(options =>
         policy.AllowAnyMethod();
     });
 });
+builder.Services.AddLogging();
 var app = builder.Build();
 
 using (var scope = app.Services.CreateScope())

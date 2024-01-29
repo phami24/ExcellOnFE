@@ -39,7 +39,7 @@ namespace Infrastructure.Repository
             }
         }
 
-       
+
         public async Task<ICollection<Client>> GetClientsByName(string firstName, string lastName)
         {
             try

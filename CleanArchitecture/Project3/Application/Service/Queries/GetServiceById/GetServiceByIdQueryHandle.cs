@@ -1,28 +1,23 @@
 ﻿using Application.DTOs.Service;
-using Domain.Interfaces;
+using Domain.Abstraction;
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Application.Service.Queries.GetServiceById
 {
     public class GetServiceByIdQueryHandle : IRequestHandler<GetServiceByIdQuery, GetServiceDto>
     {
-        private readonly IServiceRepository _serviceRepository;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public GetServiceByIdQueryHandle(IServiceRepository serviceRepository)
+        public GetServiceByIdQueryHandle(IUnitOfWork unitOfWork)
         {
-            _serviceRepository = serviceRepository;
+            _unitOfWork = unitOfWork;
         }
 
         public async Task<GetServiceDto> Handle(GetServiceByIdQuery request, CancellationToken cancellationToken)
         {
             try
             {
-                var service = await _serviceRepository.GetById(request.ServiceId);
+                var service = await _unitOfWork.Services.GetById(request.ServiceId);
 
                 if (service == null)
                 {
@@ -31,9 +26,9 @@ namespace Application.Service.Queries.GetServiceById
 
                 GetServiceDto serviceDto = new GetServiceDto
                 {
-                   ServiceName = service.ServiceName,
-                   Description = service.Description,
-                   TotalDay = service.TotalDay,
+                    ServiceName = service.ServiceName,
+                    Description = service.Description,
+                    TotalDay = service.TotalDay,
                 };
 
                 return serviceDto;

@@ -1,4 +1,5 @@
 ﻿using Application.DTOs.Employee;
+using Domain.Abstraction;
 using Domain.Interfaces;
 using Domain.Repositories;
 using MediatR;
@@ -12,23 +13,22 @@ namespace Application.Employee.Commands.DeleteEmployee
 {
     public class DeleteEmployeeCommandHandle : IRequestHandler<DeleteEmployeeCommand, bool>
     {
-        public readonly IEmployeeRepository _employeeRepository;
-        public readonly IDepartmentRepository _departmentRepository;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public DeleteEmployeeCommandHandle(IEmployeeRepository employeeRepository, IDepartmentRepository departmentRepository)
+        public DeleteEmployeeCommandHandle(IUnitOfWork unitOfWork)
         {
-            _employeeRepository = employeeRepository;
-            _departmentRepository = departmentRepository;
+            _unitOfWork = unitOfWork;
         }
 
         public async Task<bool> Handle(DeleteEmployeeCommand request, CancellationToken cancellationToken)
         {
             try
             {
-                var employeeDeleted = await _employeeRepository.GetById(request.EmployeeId);
+                var employeeDeleted = await _unitOfWork.Employees.GetById(request.EmployeeId);
                 if (employeeDeleted != null)
                 {
-                    await _employeeRepository.Delete(employeeDeleted);
+                    await _unitOfWork.Employees.Delete(employeeDeleted);
+                    await _unitOfWork.CompleteAsync();
                     return true;
                 }
                 return false;

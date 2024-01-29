@@ -1,4 +1,5 @@
-﻿using Domain.Interfaces;
+﻿using Domain.Abstraction;
+using Domain.Interfaces;
 using Domain.Repositories;
 using Infrastructure.Config;
 using Infrastructure.Data;
@@ -29,6 +30,8 @@ namespace Infrastructure
                 b => b.MigrationsAssembly(typeof(AuthDbContext).Assembly.FullName)),
                 ServiceLifetime.Transient);
 
+            services.AddLogging();
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<IClientRepository, ClientRepository>();
             services.AddScoped<IClientServiceRepository, ClientServiceRepository>();
             services.AddScoped<IDepartmentRepository, DepartmentRepository>();

@@ -1,21 +1,16 @@
 ﻿using Application.DTOs.Service;
-using Domain.Interfaces;
+using Domain.Abstraction;
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Application.Service.Commands.CreateService
 {
     public class CreateServiceCommandHandle : IRequestHandler<CreateServiceCommand, CreateServiceDto>
     {
-        private readonly IServiceRepository _serviceRepository;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public CreateServiceCommandHandle(IServiceRepository serviceRepository)
+        public CreateServiceCommandHandle(IUnitOfWork unitOfWork)
         {
-            _serviceRepository = serviceRepository;
+            _unitOfWork = unitOfWork;
         }
 
         public async Task<CreateServiceDto> Handle(CreateServiceCommand request, CancellationToken cancellationToken)
@@ -29,10 +24,11 @@ namespace Application.Service.Commands.CreateService
                     TotalDay = request.ServiceDto.TotalDay,
                 };
 
-                bool isCreate = await _serviceRepository.Add(newService);
+                bool isCreate = await _unitOfWork.Services.Add(newService);
 
                 if (isCreate)
                 {
+                    await _unitOfWork.CompleteAsync();
                     // Additional logic can be added here if needed
                     return request.ServiceDto;
                 }

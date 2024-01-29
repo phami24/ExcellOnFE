@@ -1,26 +1,16 @@
 ﻿using Application.DTOs.Client;
-using Domain.Interfaces;
-using Infrastructure.Services;
+using Domain.Abstraction;
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Application.Client.Commands.CreateClient
 {
     public class CreateClientCommandHandle : IRequestHandler<CreateClientCommand, CreateClientDto>
     {
-        private readonly IClientRepository _clientRepository;
-        private readonly ICloudinaryService _cloudinaryService;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public CreateClientCommandHandle(
-            IClientRepository clientRepository,
-            ICloudinaryService cloudinaryService)
+        public CreateClientCommandHandle(IUnitOfWork unitOfWork)
         {
-            _clientRepository = clientRepository;
-            _cloudinaryService = cloudinaryService;
+            _unitOfWork = unitOfWork;
         }
 
         public async Task<CreateClientDto> Handle(CreateClientCommand request, CancellationToken cancellationToken)
@@ -40,10 +30,10 @@ namespace Application.Client.Commands.CreateClient
 
                 Console.WriteLine(newClient);
 
-                bool isCreate = await _clientRepository.Add(newClient);
+                bool isCreate = await _unitOfWork.Clients.Add(newClient);
                 if (isCreate)
                 {
-                    // You might want to perform additional logic here if needed
+                    await _unitOfWork.CompleteAsync();
                     return request.ClientDto;
                 }
 

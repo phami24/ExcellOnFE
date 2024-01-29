@@ -1,28 +1,23 @@
 ﻿using Application.DTOs.Client;
+using Domain.Abstraction;
 using Domain.Interfaces;
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Application.Client.Queries.GetClientByName
 {
     public class GetClientByNameQueryHandle : IRequestHandler<GetClientByNameQuery, ICollection<GetClientDto>>
     {
-        private readonly IClientRepository _clientRepository;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public GetClientByNameQueryHandle(IClientRepository clientRepository)
+        public GetClientByNameQueryHandle(IUnitOfWork unitOfWork)
         {
-            _clientRepository = clientRepository;
+            _unitOfWork = unitOfWork;
         }
-
         public async Task<ICollection<GetClientDto>> Handle(GetClientByNameQuery request, CancellationToken cancellationToken)
         {
             try
             {
-                var clients = await _clientRepository.GetClientsByName(request.FirstName, request.LastName);
+                var clients = await _unitOfWork.Clients.GetClientsByName(request.FirstName, request.LastName);
                 var clientsDto = new List<GetClientDto>();
 
                 foreach (Domain.Entities.Client client in clients)

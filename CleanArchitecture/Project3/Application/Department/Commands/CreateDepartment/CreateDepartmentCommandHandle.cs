@@ -1,23 +1,15 @@
 ﻿using Application.DTOs.Department;
-using Domain.Interfaces;
-using Domain.Repositories;
+using Domain.Abstraction;
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Application.Department.Commands.CreateDepartment
 {
     public class CreateDepartmentCommandHandle : IRequestHandler<CreateDepartmentCommand, CreateDepartmentDto>
     {
-        public readonly IDepartmentRepository _departmentRepository;
-        public readonly IEmployeeRepository _employeeRepository;
-        public CreateDepartmentCommandHandle(IDepartmentRepository departmentRepository, IEmployeeRepository employeeRepository)
+        private readonly IUnitOfWork _unitOfWork;
+        public CreateDepartmentCommandHandle(IUnitOfWork unitOfWork)
         {
-            _departmentRepository = departmentRepository;
-            _employeeRepository = employeeRepository;
+            _unitOfWork = unitOfWork;
         }
 
         public async Task<CreateDepartmentDto> Handle(CreateDepartmentCommand request, CancellationToken cancellationToken)
@@ -29,10 +21,10 @@ namespace Application.Department.Commands.CreateDepartment
                     DepartmentName = request.CreateDepartment.DepartmentName,
                     DepartmentDescription = request.CreateDepartment.DepartmentDescription,
                 };
-                bool isCreate = await _departmentRepository.Add(newDepartment);
-                _departmentRepository.Save();
+                bool isCreate = await _unitOfWork.Departments.Add(newDepartment);
                 if (isCreate)
                 {
+                    await _unitOfWork.CompleteAsync();
                     return request.CreateDepartment;
                 }
                 return null;

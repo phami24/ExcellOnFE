@@ -1,4 +1,5 @@
 ﻿using Application.DTOs.Employee;
+using Domain.Abstraction;
 using Domain.Interfaces;
 using MediatR;
 using System;
@@ -11,17 +12,18 @@ namespace Application.Employee.Queries.GetEmployeeByDepartmentId
 {
     internal class GetEmployeeByDepartmentQueryHandle : IRequestHandler<GetEmployeeByDepartmentQuery, List<GetEmployeeDto>>
     {
-        public readonly IEmployeeRepository _employeeRepository;
-        public GetEmployeeByDepartmentQueryHandle(IEmployeeRepository employeeRepository)
+        private readonly IUnitOfWork _unitOfWork;
+        public GetEmployeeByDepartmentQueryHandle(IUnitOfWork unitOfWork)
         {
-            _employeeRepository = employeeRepository;
+            _unitOfWork = unitOfWork;
         }
+
         public async Task<List<GetEmployeeDto>> Handle(GetEmployeeByDepartmentQuery request, CancellationToken cancellationToken)
         {
             try
             {
 
-                var employees = await _employeeRepository.GetByDepartmentId(request.Id);
+                var employees = await _unitOfWork.Employees.GetByDepartmentId(request.Id);
                 List<GetEmployeeDto> employeesDto = new List<GetEmployeeDto>();
                 foreach (var employee in employees)
                 {

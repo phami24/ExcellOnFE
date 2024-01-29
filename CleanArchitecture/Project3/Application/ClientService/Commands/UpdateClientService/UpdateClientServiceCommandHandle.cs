@@ -1,4 +1,5 @@
 ﻿using Application.DTOs.ClientService;
+using Domain.Abstraction;
 using Domain.Entities;
 using Domain.Interfaces;
 using MediatR;
@@ -12,18 +13,18 @@ namespace Application.ClientService.Commands.UpdateClientService
 {
     public class UpdateClientServiceCommandHandle : IRequestHandler<UpdateClientServiceCommand, UpdateClientServiceDto>
     {
-        private readonly IClientServiceRepository _clientServiceRepository;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public UpdateClientServiceCommandHandle(IClientServiceRepository clientServiceRepository)
+        public UpdateClientServiceCommandHandle(IUnitOfWork unitOfWork)
         {
-            _clientServiceRepository = clientServiceRepository;
+            _unitOfWork = unitOfWork;
         }
 
         public async Task<UpdateClientServiceDto> Handle(UpdateClientServiceCommand request, CancellationToken cancellationToken)
         {
             try
             {
-                var existingClientService = await _clientServiceRepository.GetById(request.UpdateClientServiceDto.ClientServiceId);
+                var existingClientService = await _unitOfWork.ClientServices.GetById(request.UpdateClientServiceDto.ClientServiceId);
 
                 if (existingClientService == null)
                 {
@@ -38,13 +39,14 @@ namespace Application.ClientService.Commands.UpdateClientService
                 existingClientService.ClientId = request.UpdateClientServiceDto.ClientId;
                 existingClientService.StartDay = request.UpdateClientServiceDto.StartDay;
 
-  
+
 
                 // Update the client service in the repository
-                bool isUpdate = await _clientServiceRepository.Update(existingClientService);
+                bool isUpdate = await _unitOfWork.ClientServices.Update(existingClientService);
 
                 if (isUpdate)
                 {
+                    await _unitOfWork.CompleteAsync();
                     // If the update is successful, you may return the updated DTO or any relevant information
                     return request.UpdateClientServiceDto;
                 }

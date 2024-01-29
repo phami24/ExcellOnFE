@@ -1,4 +1,5 @@
-﻿using Domain.Interfaces;
+﻿using Domain.Abstraction;
+using Domain.Interfaces;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -10,14 +11,16 @@ namespace Application.Client.Queries.GetTotalClient
 {
     public class GetTotalClientQueryHandle : IRequestHandler<GetTotalClientQuery, int>
     {
-        public readonly IClientRepository _clientRepository;
-        public GetTotalClientQueryHandle(IClientRepository clientRepository)
+        private readonly IUnitOfWork _unitOfWork;
+
+        public GetTotalClientQueryHandle(IUnitOfWork unitOfWork)
         {
-            _clientRepository = clientRepository;
+            _unitOfWork = unitOfWork;
         }
+
         public Task<int> Handle(GetTotalClientQuery request, CancellationToken cancellationToken)
         {
-            return _clientRepository.Count();
+            return _unitOfWork.Clients.Count();
         }
     }
 }

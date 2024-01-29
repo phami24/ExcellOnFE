@@ -1,28 +1,24 @@
-﻿using Domain.Repositories;
+﻿using Domain.Abstraction;
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Application.Department.Commands.DeleteDepartment
 {
     public class DeleteDepartmentCommandHandle : IRequestHandler<DeleteDepartmentCommand, bool>
     {
-        public readonly IDepartmentRepository _departmentRepository;
-        public DeleteDepartmentCommandHandle(IDepartmentRepository departmentRepository)
+        public readonly IUnitOfWork _unitOfWork;
+        public DeleteDepartmentCommandHandle(IUnitOfWork unitOfWork)
         {
-            _departmentRepository = departmentRepository;
+            _unitOfWork = unitOfWork;
         }
         public async Task<bool> Handle(DeleteDepartmentCommand request, CancellationToken cancellationToken)
         {
             try
             {
-                var departmentDeleted = await _departmentRepository.GetById(request.Id);
+                var departmentDeleted = await _unitOfWork.Departments.GetById(request.Id);
                 if (departmentDeleted != null)
                 {
-                    await _departmentRepository.Delete(departmentDeleted);
+                    await _unitOfWork.Departments.Delete(departmentDeleted);
+                    await _unitOfWork.CompleteAsync();
                     return true;
                 }
                 return false;

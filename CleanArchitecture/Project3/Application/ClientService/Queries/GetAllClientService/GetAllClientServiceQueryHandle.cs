@@ -1,26 +1,21 @@
 ﻿using Application.DTOs.ClientService;
-using Domain.Interfaces;
+using Domain.Abstraction;
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Application.ClientService.Queries.GetAllClientService
 {
     public class GetAllClientServiceQueryHandle : IRequestHandler<GetAllClientServiceQuery, ICollection<GetClientServiceDto>>
     {
-        private readonly IClientServiceRepository _clientServiceRepository;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public GetAllClientServiceQueryHandle(IClientServiceRepository clientServiceRepository)
+        public GetAllClientServiceQueryHandle(IUnitOfWork unitOfWork)
         {
-            _clientServiceRepository = clientServiceRepository;
+            _unitOfWork = unitOfWork;
         }
 
         public async Task<ICollection<GetClientServiceDto>> Handle(GetAllClientServiceQuery request, CancellationToken cancellationToken)
         {
-            var clientServices = await _clientServiceRepository.All();
+            var clientServices = await _unitOfWork.ClientServices.All();
             var clientServicesDto = new List<GetClientServiceDto>();
 
             foreach (Domain.Entities.ClientService cs in clientServices)

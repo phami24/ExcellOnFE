@@ -1,32 +1,28 @@
 ﻿using Application.DTOs.Client;
+using Domain.Abstraction;
 using Domain.Interfaces;
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Application.Client.Commands.UpdateClient
 {
     public class UpdateClientCommandHandle : IRequestHandler<UpdateClientCommand, UpdateClientDto>
     {
-        private readonly IClientRepository _clientRepository;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public UpdateClientCommandHandle(IClientRepository clientRepository)
+        public UpdateClientCommandHandle(IUnitOfWork unitOfWork)
         {
-            _clientRepository = clientRepository;
+            _unitOfWork = unitOfWork;
         }
 
         public async Task<UpdateClientDto> Handle(UpdateClientCommand request, CancellationToken cancellationToken)
         {
             try
             {
-                var existingClient = await _clientRepository.GetById(request.UpdateClientDto.ClientId);
+                var existingClient = await _unitOfWork.Clients.GetById(request.UpdateClientDto.ClientId);
 
                 if (existingClient == null)
                 {
-                    
+
                     return null;
                 }
 
@@ -38,10 +34,11 @@ namespace Application.Client.Commands.UpdateClient
                 existingClient.Dob = request.UpdateClientDto.Dob;
 
                 // Update the client in the repository
-                bool isUpdate = await _clientRepository.Update(existingClient); 
+                bool isUpdate = await _unitOfWork.Clients.Update(existingClient);
 
                 if (isUpdate)
                 {
+                    await _unitOfWork.CompleteAsync();
                     // If the update is successful, you may return the updated DTO or any relevant information
                     return request.UpdateClientDto;
                 }

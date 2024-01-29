@@ -1,18 +1,18 @@
-﻿using Domain.Interfaces;
+﻿using Domain.Abstraction;
 using MediatR;
 
 namespace Application.Employee.Queries.GetTotalEmployee
 {
     public class GetTotalEmployeeQueryHandle : IRequestHandler<GetTotalEmployeeQuery, int>
     {
-        public readonly IEmployeeRepository _employeeRepository;
-        public GetTotalEmployeeQueryHandle(IEmployeeRepository employeeRepository)
+        private readonly IUnitOfWork _unitOfWork;
+        public GetTotalEmployeeQueryHandle(IUnitOfWork unitOfWork)
         {
-            _employeeRepository = employeeRepository;
+            _unitOfWork = unitOfWork;
         }
         public Task<int> Handle(GetTotalEmployeeQuery request, CancellationToken cancellationToken)
         {
-            return _employeeRepository.Count();
+            return _unitOfWork.Employees.Count();
         }
     }
 }

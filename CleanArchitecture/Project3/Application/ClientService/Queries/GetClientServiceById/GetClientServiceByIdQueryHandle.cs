@@ -1,27 +1,24 @@
 ﻿using Application.DTOs.ClientService;
+using Domain.Abstraction;
 using Domain.Interfaces;
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace Application.ClientService.Queries.GetClientServiceById
 {
     public class GetClientServiceByIdQueryHandler : IRequestHandler<GetClientServiceByIdQuery, GetClientServiceDto>
     {
-        private readonly IClientServiceRepository _clientServiceRepository;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public GetClientServiceByIdQueryHandler(IClientServiceRepository clientServiceRepository)
+        public GetClientServiceByIdQueryHandler(IUnitOfWork unitOfWork)
         {
-            _clientServiceRepository = clientServiceRepository;
+            _unitOfWork = unitOfWork;
         }
 
         public async Task<GetClientServiceDto> Handle(GetClientServiceByIdQuery request, CancellationToken cancellationToken)
         {
             try
             {
-                var clientService = await _clientServiceRepository.GetById(request.ClientServiceId);
+                var clientService = await _unitOfWork.ClientServices.GetById(request.ClientServiceId);
 
                 if (clientService == null)
                 {
@@ -36,7 +33,6 @@ namespace Application.ClientService.Queries.GetClientServiceById
                     ServiceId = clientService.ServiceId,
                     ClientId = clientService.ClientId,
                     StartDay = clientService.StartDay
-                    // Add any additional properties specific to your GetClientServiceDto
                 };
 
                 return clientServiceDto;

@@ -1,4 +1,5 @@
 ﻿using Application.DTOs.Employee;
+using Domain.Abstraction;
 using Domain.Interfaces;
 using Domain.Repositories;
 using Infrastructure.Services;
@@ -9,16 +10,13 @@ namespace Application.Employee.Commands.UpdateEmployee
 {
     public class UpdateEmployeeCommandHandle : IRequestHandler<UpdateEmployeeCommand, UpdateEmployeeDto>
     {
-        public readonly IEmployeeRepository _employeeRepository;
-        public readonly IDepartmentRepository _departmentRepository;
-        public readonly ICloudinaryService _cloudinaryService;
+        private readonly IUnitOfWork _unitOfWork;
+        private readonly ICloudinaryService _cloudinaryService;
         public UpdateEmployeeCommandHandle(
-            IEmployeeRepository employeeRepository,
-            IDepartmentRepository departmentRepository,
+            IUnitOfWork unitOfWork,
             ICloudinaryService cloudinaryService)
         {
-            _employeeRepository = employeeRepository;
-            _departmentRepository = departmentRepository;
+            _unitOfWork = unitOfWork;
             _cloudinaryService = cloudinaryService;
         }
         public async Task<UpdateEmployeeDto> Handle(UpdateEmployeeCommand request, CancellationToken cancellationToken)
@@ -32,10 +30,10 @@ namespace Application.Employee.Commands.UpdateEmployee
                 {
                     filePath = result.Url.ToString();
                 }
-                var exitingEmployee = _employeeRepository.GetById(request.UpdateEmployeeDto.Id);
+                var exitingEmployee = _unitOfWork.Employees.GetById(request.UpdateEmployeeDto.Id);
+
                 if (exitingEmployee != null)
                 {
-
                     var updateEmployee = new Domain.Entities.Employee()
                     {
                         EmployeeId = request.UpdateEmployeeDto.Id,
@@ -47,7 +45,10 @@ namespace Application.Employee.Commands.UpdateEmployee
                         DepartmentId = request.UpdateEmployeeDto.DepartmentId,
                         Dob = request.UpdateEmployeeDto.Dob
                     };
-                    await _employeeRepository.Update(updateEmployee);
+                    await _unitOfWork.Employees.Update(updateEmployee);
+                    await _unitOfWork.Departments.
+                        AddEmployee(updateEmployee, request.UpdateEmployeeDto.DepartmentId);
+                    await _unitOfWork.CompleteAsync();
                     return request.UpdateEmployeeDto;
                 }
                 else

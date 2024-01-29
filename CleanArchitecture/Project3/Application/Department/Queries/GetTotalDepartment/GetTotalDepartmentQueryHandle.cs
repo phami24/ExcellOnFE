@@ -1,24 +1,20 @@
-﻿using Domain.Repositories;
+﻿using Domain.Abstraction;
+using Domain.Repositories;
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Application.Department.Queries.GetTotalDepartment
 {
     public class GetTotalDepartmentQueryHandle : IRequestHandler<GetTotalDepartmentQuery, int>
     {
-        public readonly IDepartmentRepository _departmentRepository;
-        public GetTotalDepartmentQueryHandle(IDepartmentRepository departmentRepository)
+        public readonly IUnitOfWork _unitOfWork;
+        public GetTotalDepartmentQueryHandle(IUnitOfWork unitOfWork)
         {
-            _departmentRepository = departmentRepository;
+            _unitOfWork = unitOfWork;
         }
 
         public Task<int> Handle(GetTotalDepartmentQuery request, CancellationToken cancellationToken)
         {
-            return _departmentRepository.Count();
+            return _unitOfWork.Departments.Count();
         }
     }
 }

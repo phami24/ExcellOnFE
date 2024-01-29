@@ -1,5 +1,6 @@
 ﻿using Application.DTOs.Employee;
 using Application.Employee.Queries.GetEmployeeById;
+using Domain.Abstraction;
 using Domain.Entities;
 using Domain.Interfaces;
 using MediatR;
@@ -14,16 +15,17 @@ namespace Application.Employee.Queries.GetByName
 {
     public class GetEmployeeByNameQueryHandle : IRequestHandler<GetEmployeeByNameQuery, ICollection<GetEmployeeDto>>
     {
-        public readonly IEmployeeRepository _employeeRepository;
-        public GetEmployeeByNameQueryHandle(IEmployeeRepository employeeRepository)
+        private readonly IUnitOfWork _unitOfWork;
+        public GetEmployeeByNameQueryHandle(IUnitOfWork unitOfWork)
         {
-            _employeeRepository = employeeRepository;
+            _unitOfWork = unitOfWork;
         }
+
         public async Task<ICollection<GetEmployeeDto>> Handle(GetEmployeeByNameQuery request, CancellationToken cancellationToken)
         {
             try
             {
-                var employees = await _employeeRepository.GetByName(request.FirstName, request.LastName);
+                var employees = await _unitOfWork.Employees.GetByName(request.FirstName, request.LastName);
                 var employeesDto = new List<GetEmployeeDto>();
                 foreach (Domain.Entities.Employee e in employees)
                 {

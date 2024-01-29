@@ -1,30 +1,26 @@
-﻿using Domain.Interfaces;
+﻿using Domain.Abstraction;
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Application.Client.Commands.DeleteClient
 {
     public class DeleteClientCommandHandle : IRequestHandler<DeleteClientCommand, bool>
     {
-        public readonly IClientRepository _clientRepository; 
+        public readonly IUnitOfWork _unitOfWork;
 
-        public DeleteClientCommandHandle(IClientRepository clientRepository)
+        public DeleteClientCommandHandle(IUnitOfWork unitOfWork)
         {
-            _clientRepository = clientRepository;
+            _unitOfWork = unitOfWork;
         }
 
         public async Task<bool> Handle(DeleteClientCommand request, CancellationToken cancellationToken)
         {
             try
             {
-                var clientToDelete = await _clientRepository.GetById(request.ClientId);
+                var clientToDelete = await _unitOfWork.Clients.GetById(request.ClientId);
                 if (clientToDelete != null)
                 {
-                    await _clientRepository.Delete(clientToDelete);
+                    await _unitOfWork.Clients.Delete(clientToDelete);
+                    await _unitOfWork.CompleteAsync();
                     return true;
                 }
                 return false;

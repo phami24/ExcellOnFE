@@ -1,4 +1,5 @@
 ﻿using Application.DTOs.Client;
+using Domain.Abstraction;
 using Domain.Interfaces;
 using MediatR;
 using System;
@@ -11,17 +12,18 @@ namespace Application.Client.Queries.GetClientById
 {
     public class GetClientByIdQueryHandle : IRequestHandler<GetClientByIdQuery, GetClientDto>
     {
-        public readonly IClientRepository _clientRepository;
-        public GetClientByIdQueryHandle(IClientRepository clientRepository)
+        private readonly IUnitOfWork _unitOfWork;
+
+        public GetClientByIdQueryHandle(IUnitOfWork unitOfWork)
         {
-            _clientRepository = clientRepository;
+            _unitOfWork = unitOfWork;
         }
         public async Task<GetClientDto> Handle(GetClientByIdQuery request, CancellationToken cancellationToken)
         {
             try
             {
 
-                var client = await _clientRepository.GetById(request.Id);
+                var client = await _unitOfWork.Clients.GetById(request.Id);
                 if (client == null)
                 {
                     return null;

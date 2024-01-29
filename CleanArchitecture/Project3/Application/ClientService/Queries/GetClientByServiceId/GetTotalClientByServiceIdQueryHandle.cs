@@ -1,24 +1,19 @@
-﻿using Domain.Interfaces;
+﻿using Domain.Abstraction;
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Application.ClientService.Queries.GetClientByServiceId
 {
     internal class GetTotalClientByServiceIdQueryHandle : IRequestHandler<GetTotalClientByServiceIdQuery, int>
     {
-        public IClientServiceRepository _clientServiceRepository { get; set; }
+        public IUnitOfWork _unitOfWork { get; set; }
 
-        public GetTotalClientByServiceIdQueryHandle(IClientServiceRepository clientServiceRepository)
+        public GetTotalClientByServiceIdQueryHandle(IUnitOfWork unitOfWork)
         {
-            _clientServiceRepository = clientServiceRepository;
+            _unitOfWork = unitOfWork;
         }
         public Task<int> Handle(GetTotalClientByServiceIdQuery request, CancellationToken cancellationToken)
         {
-            return _clientServiceRepository.GetTotalClientsByServiceId(request.ServiceId);
+            return _unitOfWork.ClientServices.GetTotalClientsByServiceId(request.ServiceId);
         }
     }
 }

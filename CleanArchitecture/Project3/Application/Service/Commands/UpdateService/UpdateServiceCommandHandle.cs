@@ -1,28 +1,24 @@
 ﻿using Application.DTOs.Service;
+using Domain.Abstraction;
 using Domain.Interfaces;
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Application.Service.Commands.UpdateService
 {
     public class UpdateServiceCommandHandle : IRequestHandler<UpdateServiceCommand, UpdateServiceDto>
     {
-        private readonly IServiceRepository _serviceRepository;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public UpdateServiceCommandHandle(IServiceRepository serviceRepository)
+        public UpdateServiceCommandHandle(IUnitOfWork unitOfWork)
         {
-            _serviceRepository = serviceRepository;
+            _unitOfWork = unitOfWork;
         }
 
         public async Task<UpdateServiceDto> Handle(UpdateServiceCommand request, CancellationToken cancellationToken)
         {
             try
             {
-                var existingService = await _serviceRepository.GetById(request.UpdateServiceDto.ServiceId);
+                var existingService = await _unitOfWork.Services.GetById(request.UpdateServiceDto.ServiceId);
 
                 if (existingService == null)
                 {
@@ -36,10 +32,11 @@ namespace Application.Service.Commands.UpdateService
                 existingService.TotalDay = request.UpdateServiceDto.TotalDay;
 
                 // Update the service in the repository
-                bool isUpdate = await _serviceRepository.Update(existingService);
+                bool isUpdate = await _unitOfWork.Services.Update(existingService);
 
                 if (isUpdate)
                 {
+                    await _unitOfWork.CompleteAsync();
                     // If the update is successful, you may return the updated DTO or any relevant information
                     return request.UpdateServiceDto;
                 }
