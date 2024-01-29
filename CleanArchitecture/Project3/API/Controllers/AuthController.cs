@@ -28,6 +28,15 @@ namespace API.Controllers
         }
 
         [HttpPost]
+        [Route("GetEmployeeProfileByJwt")]
+        public async Task<IActionResult> GetProfileByJwt([FromQuery] string token)
+        {
+            var userProfile = await _jwtService.GetProfileByJwt(token);
+
+            return Ok(new { UserProfile = userProfile });
+        }
+
+        [HttpPost]
         [Route("EmployeeRegister")]
         public async Task<IActionResult> EmployeeRegister([FromForm] CreateEmployeeDto request)
         {
@@ -181,5 +190,8 @@ namespace API.Controllers
             }
             return BadRequest("Invalid request payload !");
         }
+
+
+
     }
 }

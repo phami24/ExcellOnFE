@@ -48,6 +48,7 @@ namespace Application.Employee.Commands.CreateEmployee
                 if (isCreate)
                 {
                     var employee = await _unitOfWork.Employees.GetByEmail(newEmployee.Email);
+                    await _unitOfWork.CompleteAsync();
                     await _unitOfWork.Departments.AddEmployee(employee, employee.DepartmentId);
                     await _unitOfWork.CompleteAsync();
                     return request.EmployeeDto;
