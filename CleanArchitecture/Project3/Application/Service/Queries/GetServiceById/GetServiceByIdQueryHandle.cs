@@ -31,6 +31,7 @@ namespace Application.Service.Queries.GetServiceById
 
                 GetServiceDto serviceDto = new GetServiceDto
                 {
+                   ServiceId = request.ServiceId,
                    ServiceName = service.ServiceName,
                    Description = service.Description,
                    TotalDay = service.TotalDay,

@@ -27,6 +27,7 @@ namespace Application.Service.Queries.GetAllService
             {
                 var serviceDto = new GetServiceDto()
                 {
+                    ServiceId = s.ServiceId,
                     ServiceName = s.ServiceName,
                     Description = s.Description,
                     TotalDay = s.TotalDay,
