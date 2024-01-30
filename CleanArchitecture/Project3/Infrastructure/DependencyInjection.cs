@@ -68,6 +68,8 @@ namespace Infrastructure
                     ValidateLifetime = false
                 };
             });
+            services.Configure<StripeSetting>(configuration.GetSection("Stripe"));
+
             return services;
         }
     }
