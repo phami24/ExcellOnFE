@@ -1,15 +1,13 @@
 ﻿using Application.DTOs.Employee;
-using Application.Employee.Commands.CreateEmployee;
 using Application.Employee.Commands.DeleteEmployee;
 using Application.Employee.Commands.UpdateEmployee;
 using Application.Employee.Queries.GetAllEmployee;
 using Application.Employee.Queries.GetByName;
 using Application.Employee.Queries.GetEmployeeByDepartmentId;
 using Application.Employee.Queries.GetEmployeeById;
-using Domain.Entities;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
@@ -19,9 +17,11 @@ namespace API.Controllers
     public class EmployeeController : ControllerBase
     {
         private readonly IMediator _mediator;
-        public EmployeeController(IMediator mediator)
+        private readonly UserManager<IdentityUser> _userManager;
+        public EmployeeController(IMediator mediator, UserManager<IdentityUser> userManager)
         {
             _mediator = mediator;
+            _userManager = userManager;
         }
         [HttpGet]
         public async Task<IActionResult> GetAllEmployees()
@@ -52,25 +52,33 @@ namespace API.Controllers
         {
             try
             {
-
-                string firstName = name.Split(' ')[0];
-                string lastName = name.Split(' ')[1];
-                var query = new GetEmployeeByNameQuery()
+                if (string.IsNullOrEmpty(name))
                 {
-                    FirstName = firstName,
-                    LastName = lastName
-                };
+                    // Xử lý khi name là null hoặc rỗng
+                    string firstName = name.Split(' ')[0];
+                    string lastName = name.Split(' ')[1];
+                    if (string.IsNullOrWhiteSpace(lastName))
+                    {
+                        lastName = " ";
+                    }
+                    var query = new GetEmployeeByNameQuery()
+                    {
+                        FirstName = firstName,
+                        LastName = lastName
+                    };
 
-                var employee = await _mediator.Send(query);
+                    var employee = await _mediator.Send(query);
 
-                if (employee != null)
-                {
-                    return Ok(employee);
+                    if (employee != null)
+                    {
+                        return Ok(employee);
+                    }
+                    else
+                    {
+                        return NotFound($"Employee {name} not found.");
+                    }
                 }
-                else
-                {
-                    return NotFound($"Employee {name} not found.");
-                }
+                return BadRequest("Name cannot be null or empty.");
             }
             catch (Exception ex)
             {

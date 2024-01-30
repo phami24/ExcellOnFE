@@ -1,15 +1,17 @@
 ﻿using Domain.Abstraction;
 using MediatR;
+using Microsoft.AspNetCore.Identity;
 
 namespace Application.Client.Commands.DeleteClient
 {
     public class DeleteClientCommandHandle : IRequestHandler<DeleteClientCommand, bool>
     {
-        public readonly IUnitOfWork _unitOfWork;
-
-        public DeleteClientCommandHandle(IUnitOfWork unitOfWork)
+        private readonly IUnitOfWork _unitOfWork;
+        private readonly UserManager<IdentityUser> _userManager;
+        public DeleteClientCommandHandle(IUnitOfWork unitOfWork, UserManager<IdentityUser> userManager)
         {
             _unitOfWork = unitOfWork;
+            _userManager = userManager;
         }
 
         public async Task<bool> Handle(DeleteClientCommand request, CancellationToken cancellationToken)
@@ -20,6 +22,11 @@ namespace Application.Client.Commands.DeleteClient
                 if (clientToDelete != null)
                 {
                     await _unitOfWork.Clients.Delete(clientToDelete);
+                    var userDeleled = await _userManager.FindByEmailAsync(clientToDelete.Email);
+                    if (userDeleled != null)
+                    {
+                        await _userManager.DeleteAsync(userDeleled);
+                    }
                     await _unitOfWork.CompleteAsync();
                     return true;
                 }

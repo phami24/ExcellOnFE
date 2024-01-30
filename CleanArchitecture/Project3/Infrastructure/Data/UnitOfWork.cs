@@ -26,7 +26,6 @@ namespace Infrastructure.Data
             ILoggerFactory loggerFactory
            )
         {
-
             _context = context;
             _authDbContext = authDbContext;
             Clients = new ClientRepository(_context, loggerFactory.CreateLogger<ClientRepository>());

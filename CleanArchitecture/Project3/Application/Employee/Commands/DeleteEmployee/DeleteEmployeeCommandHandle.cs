@@ -3,6 +3,7 @@ using Domain.Abstraction;
 using Domain.Interfaces;
 using Domain.Repositories;
 using MediatR;
+using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,10 +15,13 @@ namespace Application.Employee.Commands.DeleteEmployee
     public class DeleteEmployeeCommandHandle : IRequestHandler<DeleteEmployeeCommand, bool>
     {
         private readonly IUnitOfWork _unitOfWork;
+        private readonly UserManager<IdentityUser> _userManager;
 
-        public DeleteEmployeeCommandHandle(IUnitOfWork unitOfWork)
+        public DeleteEmployeeCommandHandle(IUnitOfWork unitOfWork, UserManager<IdentityUser> userManager)
         {
             _unitOfWork = unitOfWork;
+            _userManager = userManager;
+
         }
 
         public async Task<bool> Handle(DeleteEmployeeCommand request, CancellationToken cancellationToken)
@@ -28,6 +32,11 @@ namespace Application.Employee.Commands.DeleteEmployee
                 if (employeeDeleted != null)
                 {
                     await _unitOfWork.Employees.Delete(employeeDeleted);
+                    var userDelete = await _userManager.FindByEmailAsync(employeeDeleted.Email);
+                    if (userDelete != null)
+                    {
+                        await _userManager.DeleteAsync(userDelete);
+                    }
                     await _unitOfWork.CompleteAsync();
                     return true;
                 }
