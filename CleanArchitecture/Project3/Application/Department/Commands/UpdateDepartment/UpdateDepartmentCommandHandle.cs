@@ -16,18 +16,19 @@ namespace Application.Department.Commands.UpdateDepartment
         {
             try
             {
-                var exitingEmployee = _unitOfWork.Departments.GetById(request.UpdateDepartmentDto.Id);
-                if (exitingEmployee != null)
+                var exitingDepartment = await _unitOfWork.Departments.GetById(request.UpdateDepartmentDto.Id);
+                if (exitingDepartment != null)
                 {
 
-                    var updateEmployee = new Domain.Entities.Department()
+                    var updateDepartment = new Domain.Entities.Department()
                     {
                         Id = request.UpdateDepartmentDto.Id,
                         DepartmentDescription = request.UpdateDepartmentDto.DepartmentDescription,
                         DepartmentName = request.UpdateDepartmentDto.DepartmentName
                     };
-                    await _unitOfWork.Departments.Update(updateEmployee);
+                    await _unitOfWork.Departments.Update(updateDepartment);
                     await _unitOfWork.CompleteAsync();
+
                     return request.UpdateDepartmentDto;
                 }
                 else

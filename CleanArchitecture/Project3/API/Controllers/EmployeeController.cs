@@ -52,14 +52,14 @@ namespace API.Controllers
         {
             try
             {
-                if (string.IsNullOrEmpty(name))
+                if (!string.IsNullOrEmpty(name))
                 {
                     // Xử lý khi name là null hoặc rỗng
                     string firstName = name.Split(' ')[0];
-                    string lastName = name.Split(' ')[1];
-                    if (string.IsNullOrWhiteSpace(lastName))
+                    string lastName = " ";
+                    if (!(name.Split(' ').Length > 1))
                     {
-                        lastName = " ";
+                        lastName = name.Split(' ')[1];
                     }
                     var query = new GetEmployeeByNameQuery()
                     {

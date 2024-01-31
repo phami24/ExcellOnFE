@@ -13,6 +13,7 @@
           "MediatR": "12.2.0",
           "Microsoft.AspNetCore.OpenApi": "7.0.11",
           "Microsoft.EntityFrameworkCore.Tools": "7.0.15",
+          "Stripe.net": "43.12.0",
           "Swashbuckle.AspNetCore": "6.5.0"
         },
         "runtime": {
@@ -630,6 +631,18 @@
       "runtime.ubuntu.14.04-x64.runtime.native.System.Security.Cryptography.OpenSsl/4.3.2": {},
       "runtime.ubuntu.16.04-x64.runtime.native.System.Security.Cryptography.OpenSsl/4.3.2": {},
       "runtime.ubuntu.16.10-x64.runtime.native.System.Security.Cryptography.OpenSsl/4.3.2": {},
+      "Stripe.net/43.12.0": {
+        "dependencies": {
+          "Newtonsoft.Json": "13.0.3",
+          "System.Configuration.ConfigurationManager": "6.0.1"
+        },
+        "runtime": {
+          "lib/net6.0/Stripe.net.dll": {
+            "assemblyVersion": "43.12.0.0",
+            "fileVersion": "43.12.0.0"
+          }
+        }
+      },
       "Swashbuckle.AspNetCore/6.5.0": {
         "dependencies": {
           "Microsoft.Extensions.ApiDescription.Server": "6.0.5",
@@ -1180,7 +1193,8 @@
           "Microsoft.AspNetCore.Identity.UI": "7.0.15",
           "Microsoft.EntityFrameworkCore": "7.0.15",
           "Microsoft.EntityFrameworkCore.SqlServer": "7.0.15",
-          "Microsoft.Extensions.DependencyInjection.Abstractions": "8.0.0"
+          "Microsoft.Extensions.DependencyInjection.Abstractions": "8.0.0",
+          "Stripe.net": "43.12.0"
         },
         "runtime": {
           "Infrastructure.dll": {}
@@ -1704,6 +1718,13 @@
       "sha512": "sha512-leXiwfiIkW7Gmn7cgnNcdtNAU70SjmKW3jxGj1iKHOvdn0zRWsgv/l2OJUO5zdGdiv2VRFnAsxxhDgMzofPdWg==",
       "path": "runtime.ubuntu.16.10-x64.runtime.native.system.security.cryptography.openssl/4.3.2",
       "hashPath": "runtime.ubuntu.16.10-x64.runtime.native.system.security.cryptography.openssl.4.3.2.nupkg.sha512"
+    },
+    "Stripe.net/43.12.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-0cDEW1/wRJqXpBRcsZcDhQDHK1cEtdtYsh3bfW0hP/2TQQRvuXNzsV3N90coEO3/ziEhcx1FEZW3anwFdFFo/g==",
+      "path": "stripe.net/43.12.0",
+      "hashPath": "stripe.net.43.12.0.nupkg.sha512"
     },
     "Swashbuckle.AspNetCore/6.5.0": {
       "type": "package",

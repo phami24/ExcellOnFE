@@ -30,7 +30,7 @@ namespace Application.Employee.Commands.UpdateEmployee
                 {
                     filePath = result.Url.ToString();
                 }
-                var exitingEmployee = _unitOfWork.Employees.GetById(request.UpdateEmployeeDto.Id);
+                var exitingEmployee = await _unitOfWork.Employees.GetById(request.UpdateEmployeeDto.Id);
 
                 if (exitingEmployee != null)
                 {

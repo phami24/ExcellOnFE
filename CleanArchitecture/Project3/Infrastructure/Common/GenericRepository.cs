@@ -32,7 +32,7 @@ namespace Infrastructure.Common
 
         public virtual async Task<bool> Update(T entity)
         {
-            _dbSet.Update(entity);
+             _dbSet.Update(entity);
             return true;
         }
 
