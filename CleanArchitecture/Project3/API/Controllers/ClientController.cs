@@ -15,7 +15,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace API.Controllers
 {
     [Route("api/[controller]")]
-    [Authorize(Roles = "Admin,User")]
+    [Authorize(Roles = "Admin,Employee")]
     public class ClientController : ControllerBase
     {
         private readonly IMediator _mediator;
@@ -47,32 +47,7 @@ namespace API.Controllers
             }
             return NotFound($"Client {id} not found!");
         }
-        [HttpPost]
-        public async Task<IActionResult> CreateClient([FromBody] CreateClientDto createClientDto)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            var createClientCommand = new CreateClientCommand { ClientDto = createClientDto };
-
-            try
-            {
-                var createdClient = await _mediator.Send(createClientCommand);
-
-                if (createdClient == null)
-                {
-                    // Handle the case where the createdClient is null
-                    return StatusCode(500, "Internal server error: Unable to create the client");
-                }
-                return CreatedAtAction(nameof(GetAllClients), createdClient);
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, $"Internal server error: {ex.Message}");
-            }
-        }
+        
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateClient( [FromBody] UpdateClientDto updateClientDto)
         {

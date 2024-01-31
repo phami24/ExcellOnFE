@@ -195,3 +195,4 @@ H:\e-Project3\Excell-On-Service\ExcellOn\CleanArchitecture\Project3\API\obj\Debu
 H:\e-Project3\Excell-On-Service\ExcellOn\CleanArchitecture\Project3\API\obj\Debug\net7.0\API.genruntimeconfig.cache
 H:\e-Project3\Excell-On-Service\ExcellOn\CleanArchitecture\Project3\API\obj\Debug\net7.0\ref\API.dll
 C:\Users\LAPTOP\Documents\ExcellOn\CleanArchitecture\Project3\API\bin\Debug\net7.0\Stripe.net.dll
+H:\e-Project3\Excell-On-Service\ExcellOn\CleanArchitecture\Project3\API\bin\Debug\net7.0\Stripe.net.dll
