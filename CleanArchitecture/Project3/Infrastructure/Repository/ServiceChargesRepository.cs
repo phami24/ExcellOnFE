@@ -13,6 +13,19 @@ namespace Infrastructure.Repository
         {
         }
 
+        public async Task<List<ServiceCharges>> GetByServiceId(int serviceId)
+        {
+            try
+            {
+                return await _context.ServiceCharges.AsNoTracking().Where(e => e.ServiceId == serviceId).ToListAsync();
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, "Error occurred while trying to get employees by name.");
+                return new List<ServiceCharges>();
+            }
+        }
+
         public override async Task<ServiceCharges?> GetById(int id)
         {
             try

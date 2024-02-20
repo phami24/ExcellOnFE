@@ -6,6 +6,7 @@ using Application.ServiceCharges.Commands.DeleteServiceCharges;
 using Application.ServiceCharges.Commands.UpdateServiceCharges;
 using Application.ServiceCharges.Queries.GetAllServiceCharges;
 using Application.ServiceCharges.Queries.GetServiceChargesById;
+using Application.ServiceCharges.Queries.GetServiceChargesByServiceId;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -27,6 +28,32 @@ namespace API.Controllers
             var query = new GetAllServiceChargesQuery();
             var serviceCharges = await _mediator.Send(query);
             return Ok(serviceCharges);
+        }
+
+        [HttpGet]
+        [Route("getByServiceId/{serviceId}")]
+        public async Task<IActionResult> GetByServiceId(int serviceId)
+        {
+            try
+            {
+                var query = new GetServiceChargeByServiceIdQuery()
+                {
+                    Id = serviceId
+                };
+                var serviceCharges = await _mediator.Send(query);
+                if (serviceCharges != null)
+                {
+                    return Ok(serviceCharges);
+                }
+                else
+                {
+                    return NotFound($"Service with ID {serviceId} not found.");
+                }
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"An error occurred while processing the request: {ex.Message}");
+            }
         }
 
         [HttpGet("{id}")]
