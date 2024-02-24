@@ -1,4 +1,7 @@
-﻿using Application.DTOs.Client;
+﻿using Application.DTOs.Cart;
+using Application.DTOs.Client;
+using Application.DTOs.Service;
+using Application.DTOs.ServiceCharges;
 using Domain.Abstraction;
 using Domain.Interfaces;
 using MediatR;
@@ -16,24 +19,47 @@ namespace Application.Client.Queries.GetAllClient
 
         public async Task<ICollection<GetClientDto>> Handle(GetAllClientQuery request, CancellationToken cancellationToken)
         {
-            var clients = await _unitOfWork.Clients.All();
-            var clientsDto = new List<GetClientDto>();
+            var clients = await _unitOfWork.Clients.All(); // Ensure to materialize the collection
+            var clientDtos = new List<GetClientDto>();
 
-            foreach (Domain.Entities.Client c in clients)
+            foreach (var client in clients)
             {
-                var clientDto = new GetClientDto()
+                var cartDetails = await _unitOfWork.Cart.GetCartById(client.ClientId); // Ensure to materialize the collection
+
+                var cartDto = new GetClientDto
                 {
-                    ClientId = c.ClientId,
-                    FirstName = c.FirstName,
-                    LastName = c.LastName,
-                    Email = c.Email,
-                    Phone = c.Phone,
-                    Dob = c.Dob,
+                    ClientId = client.ClientId,
+                    FirstName = client.FirstName,
+                    LastName = client.LastName,
+                    Dob = client.Dob,
+                    Email = client.Email,
+                    Phone = client.Phone,
+                    CartDetail = new List<GetCartServiceChargeDto>() // Initialize the list
                 };
-                clientsDto.Add(clientDto);
+
+                foreach (var cartDetail in cartDetails)
+                {
+                    var serviceCharge = await _unitOfWork.ServicesCharges.GetById(cartDetail.ServiceChargeId);
+
+                    if (serviceCharge != null)
+                    {
+                        var cartServiceChargeDto = new GetCartServiceChargeDto
+                        {
+                            ClientId = cartDetail.ClientId,
+                            ServiceChargeId = cartDetail.ServiceChargeId,
+                            ServiceChargesName = serviceCharge.ServiceChargesName,
+                            ServiceChargesDescription = serviceCharge.ServiceChargesDescription,
+                            Price = serviceCharge.Price
+                        };
+
+                        cartDto.CartDetail.Add(cartServiceChargeDto);
+                    }
+                }
+
+                clientDtos.Add(cartDto);
             }
 
-            return clientsDto;
+            return clientDtos;
         }
     }
 }

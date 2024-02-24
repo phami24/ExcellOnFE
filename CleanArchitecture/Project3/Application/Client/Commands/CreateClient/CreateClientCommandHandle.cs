@@ -17,8 +17,6 @@ namespace Application.Client.Commands.CreateClient
         {
             try
             {
-                string fileName = request.ClientDto.Email;
-
                 var newClient = new Domain.Entities.Client()
                 {
                     FirstName = request.ClientDto.FirstName,

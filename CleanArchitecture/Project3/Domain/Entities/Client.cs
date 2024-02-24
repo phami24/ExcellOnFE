@@ -23,5 +23,7 @@ namespace Domain.Entities
 
         public ICollection<ClientService> ClientServices { get; set; }
         public ICollection<Payment> Payments { get; set; }
+        public ICollection<CartDetail> CartDetail { get; set; }
+
     }
 }

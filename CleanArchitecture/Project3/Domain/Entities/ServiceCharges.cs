@@ -19,6 +19,8 @@ namespace Domain.Entities
         public int ServiceId { get; set; }
         [Required]
         public Service Service { get; set; }
+        public ICollection<CartDetail> CartDetail { get; set; }
+
     }
 
 }

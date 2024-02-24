@@ -20,6 +20,7 @@ namespace Infrastructure.Data
         public IReportRepository Reports { get; set; }
         public IServiceRepository Services { get; set; }
         public IServiceChargesRepository ServicesCharges { get; set; }
+        public ICartRepository Cart { get; set; }
         public UnitOfWork(
             AppDbContext context,
             AuthDbContext authDbContext,
@@ -36,6 +37,7 @@ namespace Infrastructure.Data
             Reports = new ReportRepository(_context, loggerFactory.CreateLogger<ReportRepository>());
             Services = new ServiceRepository(_context, loggerFactory.CreateLogger<ServiceRepository>());
             ServicesCharges = new ServiceChargesRepository(_context, loggerFactory.CreateLogger<ServiceChargesRepository>());
+            Cart = new CartRepository(_context, loggerFactory.CreateLogger<CartRepository>());
         }
 
         public async Task CompleteAsync()

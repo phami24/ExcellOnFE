@@ -1,4 +1,7 @@
-﻿using System;
+﻿using Application.DTOs.Cart;
+using Application.DTOs.ServiceCharges;
+using Domain.Entities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,5 +17,6 @@ namespace Application.DTOs.Client
         public string Dob { get; set; }
         public string Email { get; set; }
         public string Phone { get; set; }
+        public ICollection<GetCartServiceChargeDto> CartDetail { get; set; }
     }
 }

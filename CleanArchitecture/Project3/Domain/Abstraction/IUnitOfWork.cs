@@ -6,6 +6,8 @@ namespace Domain.Abstraction
     public interface IUnitOfWork
     {
         IClientRepository Clients { get; }
+
+        ICartRepository Cart { get; }
         IClientServiceRepository ClientServices { get; }
         IDepartmentRepository Departments { get; }
         IEmployeeRepository Employees { get; }

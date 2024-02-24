@@ -13,6 +13,7 @@ namespace Infrastructure.Data
         public DbSet<ServiceCharges> ServiceCharges { get; set; }
         public DbSet<Report> Reports { get; set; }
         public DbSet<Payment> Payments { get; set; }
+        public DbSet<CartDetail> CartDetail { get; set; }
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
         {
         }
@@ -58,6 +59,14 @@ namespace Infrastructure.Data
                 .HasOne(sc => sc.Service)
                 .WithMany(s => s.ServicesCharges)
                 .HasForeignKey(sc => sc.ServiceId);
+            modelBuilder.Entity<CartDetail>()
+                .HasOne(sc => sc.Client)
+                .WithMany(s => s.CartDetail)
+                .HasForeignKey(sc => sc.ClientId);
+            modelBuilder.Entity<CartDetail>()
+                .HasOne(sc => sc.ServiceCharges)
+                .WithMany(s => s.CartDetail)
+                .HasForeignKey(sc => sc.ServiceChargeId);
             base.OnModelCreating(modelBuilder);
         }
     }

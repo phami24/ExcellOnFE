@@ -22,6 +22,29 @@ namespace Infrastructure.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("Domain.Entities.CartDetail", b =>
+                {
+                    b.Property<int>("CartId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CartId"));
+
+                    b.Property<int>("ClientId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ServiceChargeId")
+                        .HasColumnType("int");
+
+                    b.HasKey("CartId");
+
+                    b.HasIndex("ClientId");
+
+                    b.HasIndex("ServiceChargeId");
+
+                    b.ToTable("CartDetail");
+                });
+
             modelBuilder.Entity("Domain.Entities.Client", b =>
                 {
                     b.Property<int>("ClientId")
@@ -261,6 +284,25 @@ namespace Infrastructure.Migrations
                     b.ToTable("ServiceCharges");
                 });
 
+            modelBuilder.Entity("Domain.Entities.CartDetail", b =>
+                {
+                    b.HasOne("Domain.Entities.Client", "Client")
+                        .WithMany("CartDetail")
+                        .HasForeignKey("ClientId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Domain.Entities.ServiceCharges", "ServiceCharges")
+                        .WithMany("CartDetail")
+                        .HasForeignKey("ServiceChargeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Client");
+
+                    b.Navigation("ServiceCharges");
+                });
+
             modelBuilder.Entity("Domain.Entities.ClientService", b =>
                 {
                     b.HasOne("Domain.Entities.Client", "Client")
@@ -315,6 +357,8 @@ namespace Infrastructure.Migrations
 
             modelBuilder.Entity("Domain.Entities.Client", b =>
                 {
+                    b.Navigation("CartDetail");
+
                     b.Navigation("ClientServices");
 
                     b.Navigation("Payments");
@@ -328,6 +372,11 @@ namespace Infrastructure.Migrations
             modelBuilder.Entity("Domain.Entities.Service", b =>
                 {
                     b.Navigation("ServicesCharges");
+                });
+
+            modelBuilder.Entity("Domain.Entities.ServiceCharges", b =>
+                {
+                    b.Navigation("CartDetail");
                 });
 #pragma warning restore 612, 618
         }
