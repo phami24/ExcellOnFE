@@ -8,6 +8,7 @@ namespace Application.DTOs.Cart
 {
     public class GetCartServiceChargeDto
     {
+        public int CartId { get; set; }
         public int ClientId { get; set; }
         public int ServiceChargeId { get; set; }
         public string ServiceChargesName { get; set; }

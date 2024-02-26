@@ -11,6 +11,7 @@ namespace Domain.Interfaces
     public interface ICartRepository : IGenericRepository<CartDetail, int>
     {
         Task<List<CartDetail>> GetCartById(int clientId);
+        Task<CartDetail> GetByServiceChargeId(int serviceChargeId);
         Task<double> CalculateTotalPrice(int id);
 
     }

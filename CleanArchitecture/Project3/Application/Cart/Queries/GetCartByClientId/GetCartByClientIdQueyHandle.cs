@@ -1,4 +1,5 @@
-﻿using Application.DTOs.ServiceCharges;
+﻿using Application.DTOs.Cart;
+using Application.DTOs.ServiceCharges;
 using Application.ServiceCharges.Queries.GetServiceChargesByServiceId;
 using Domain.Abstraction;
 using MediatR;
@@ -10,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace Application.Cart.Queries.GetCartByClientId
 {
-    public class GetCartByClientIdQueyHandle : IRequestHandler<GetCartByClientIdQuery, List<GetServiceChargesDto>>
+    public class GetCartByClientIdQueyHandle : IRequestHandler<GetCartByClientIdQuery, List<GetCartServiceChargeDto>>
     {
         private readonly IUnitOfWork _unitOfWork;
 
@@ -19,12 +20,12 @@ namespace Application.Cart.Queries.GetCartByClientId
             _unitOfWork = unitOfWork;
         }
 
-        public async Task<List<GetServiceChargesDto>> Handle(GetCartByClientIdQuery request, CancellationToken cancellationToken)
+        public async Task<List<GetCartServiceChargeDto>> Handle(GetCartByClientIdQuery request, CancellationToken cancellationToken)
         {
             try
             {
                 var cartDetails = await _unitOfWork.Cart.GetCartById(request.Id);
-                List<GetServiceChargesDto> serviceChargesDto = new List<GetServiceChargesDto>();
+                List<GetCartServiceChargeDto> serviceChargesDto = new List<GetCartServiceChargeDto>();
 
                 foreach (var cartDetail in cartDetails)
                 {
@@ -32,13 +33,14 @@ namespace Application.Cart.Queries.GetCartByClientId
 
                     if (serviceCharge != null)
                     {
-                        var serviceChargeDto = new GetServiceChargesDto()
+                        var serviceChargeDto = new GetCartServiceChargeDto()
                         {
-                            ServiceChargesId = serviceCharge.ServiceChargesId,
+                            ClientId = request.Id,
+                            CartId = cartDetail.CartId,
+                            ServiceChargeId = serviceCharge.ServiceChargesId,
                             ServiceChargesName = serviceCharge.ServiceChargesName,
                             Price = serviceCharge.Price,
                             ServiceChargesDescription = serviceCharge.ServiceChargesDescription,
-                            ServiceId = serviceCharge.ServiceId
                         };
                         serviceChargesDto.Add(serviceChargeDto);
                     }

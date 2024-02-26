@@ -52,5 +52,32 @@ namespace Infrastructure.Repository
                 throw;
             }
         }
+        public override async Task<CartDetail?> GetById(int id)
+        {
+            try
+            {
+                return await _context.CartDetail.AsNoTracking().FirstOrDefaultAsync(sc => sc.CartId == id);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.ToString());
+                return null;
+            }
+        }
+        public async Task<CartDetail> GetByServiceChargeId(int serviceChargeId)
+        {
+            try
+            {
+                return await _context.CartDetail
+                    .AsNoTracking()
+                    .FirstOrDefaultAsync(cd => cd.ServiceChargeId == serviceChargeId);
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, "Error occurred while getting CartDetail by ServiceChargeId: {ServiceChargeId}", serviceChargeId);
+                throw;
+            }
+        }
+
     }
 }
