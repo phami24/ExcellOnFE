@@ -12,6 +12,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
+using MongoDB.Driver;
 using System.Text;
 
 namespace Infrastructure
@@ -30,6 +31,21 @@ namespace Infrastructure
                 b => b.MigrationsAssembly(typeof(AuthDbContext).Assembly.FullName)),
                 ServiceLifetime.Transient);
 
+      
+
+            //services.AddSingleton<IMongoClient>(provider =>
+            //{
+            //    var connectionString = configuration.GetConnectionString("ChatDBConnection");
+            //    return new MongoClient(connectionString);
+                
+            //});
+
+            //services.AddScoped<IMongoDatabase>(provider =>
+            //{
+            //    var client = provider.GetService<IMongoClient>();
+            //    return client.GetDatabase("chat");
+            //});
+
             services.AddLogging();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<IClientRepository, ClientRepository>();
@@ -40,6 +56,8 @@ namespace Infrastructure
             services.AddScoped<IReportRepository, ReportRepository>();
             services.AddScoped<IServiceChargesRepository, ServiceChargesRepository>();
             services.AddScoped<IServiceRepository, ServiceRepository>();
+            services.AddScoped<ChatGroupRepository>();
+            services.AddScoped<MessageRepository>();
             services.AddScoped<IJwtService, JwtService>();
             services.AddScoped<ICloudinaryService, CloudinaryService>();
 
@@ -69,6 +87,7 @@ namespace Infrastructure
                 };
             });
             services.Configure<StripeSetting>(configuration.GetSection("Stripe"));
+            services.Configure<ChatDatabaseSettings>(configuration.GetSection("ChatDatabase"));
 
             return services;
         }

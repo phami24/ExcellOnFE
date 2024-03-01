@@ -139,6 +139,10 @@
               "target": "Package",
               "version": "[7.0.0, )"
             },
+            "MongoDB.Driver": {
+              "target": "Package",
+              "version": "[2.20.0, )"
+            },
             "Stripe.net": {
               "target": "Package",
               "version": "[43.12.0, )"
