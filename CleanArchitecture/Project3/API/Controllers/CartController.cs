@@ -78,13 +78,13 @@ namespace API.Controllers
             var carts = await _mediator.Send(cartQuery);
             return Ok(carts);
         }
-        [HttpGet("total-price/{clientId}")]
-        public async Task<IActionResult> GetTotalPrice(int clientId)
-        {
-            var query = new GetTotalPriceQuery();
-            var totalItem = await _mediator.Send(query);
-            return Ok(totalItem);
-        }
+        //[HttpGet("total-price/{clientId}")]
+        //public async Task<IActionResult> GetTotalPrice(int clientId)
+        //{
+        //    var query = new GetTotalPriceQuery();
+        //    var totalItem = await _mediator.Send(query);
+        //    return Ok(totalItem);
+        //}
 
         [HttpDelete("{cartId}")]
         public async Task<IActionResult> DeleteCartItem(int cartId)

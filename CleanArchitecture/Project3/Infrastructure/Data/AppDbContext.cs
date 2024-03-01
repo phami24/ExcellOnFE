@@ -14,6 +14,8 @@ namespace Infrastructure.Data
         public DbSet<Report> Reports { get; set; }
         public DbSet<Payment> Payments { get; set; }
         public DbSet<CartDetail> CartDetail { get; set; }
+        public DbSet<Order> Order { get; set; }
+        public DbSet<OrderDetail> OrderDetail { get; set; }
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
         {
         }

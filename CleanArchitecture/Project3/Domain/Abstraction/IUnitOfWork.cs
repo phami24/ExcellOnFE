@@ -8,6 +8,8 @@ namespace Domain.Abstraction
         IClientRepository Clients { get; }
 
         ICartRepository Cart { get; }
+        IOrderRepository Order { get; }
+        IOrderDetailRepository OrderDetail { get; }
         IClientServiceRepository ClientServices { get; }
         IDepartmentRepository Departments { get; }
         IEmployeeRepository Employees { get; }

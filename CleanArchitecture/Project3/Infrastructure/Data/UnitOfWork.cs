@@ -21,6 +21,8 @@ namespace Infrastructure.Data
         public IServiceRepository Services { get; set; }
         public IServiceChargesRepository ServicesCharges { get; set; }
         public ICartRepository Cart { get; set; }
+        public IOrderRepository Order { get; set; }
+        public IOrderDetailRepository OrderDetail { get; set; }
         public UnitOfWork(
             AppDbContext context,
             AuthDbContext authDbContext,
