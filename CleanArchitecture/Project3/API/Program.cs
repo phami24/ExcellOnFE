@@ -1,3 +1,4 @@
+using API.Hubs;
 using Application;
 using Infrastructure;
 using Infrastructure.Config;
@@ -14,6 +15,8 @@ builder.Services.AddSwaggerGen();
 builder.Services
     .AddApplication()
     .AddInFrastructure(builder.Configuration);
+builder.Services.AddSignalR();
+builder.Services.AddScoped<ChatHub>();
 
 builder.Services.Configure<JwtConfig>(builder.Configuration.GetSection("JwtConfig"));
 var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
@@ -50,6 +53,8 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
+
+app.MapHub<ChatHub>("chat-hub");
 
 app.UseCors(MyAllowSpecificOrigins);
 

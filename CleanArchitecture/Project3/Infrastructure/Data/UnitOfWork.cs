@@ -4,6 +4,7 @@ using Domain.Interfaces;
 using Domain.Repositories;
 using Infrastructure.Repository;
 using Microsoft.Extensions.Logging;
+using MongoDB.Driver;
 
 namespace Infrastructure.Data
 {
@@ -27,10 +28,12 @@ namespace Infrastructure.Data
             AppDbContext context,
             AuthDbContext authDbContext,
             ILoggerFactory loggerFactory
+           
            )
         {
             _context = context;
             _authDbContext = authDbContext;
+       
             Clients = new ClientRepository(_context, loggerFactory.CreateLogger<ClientRepository>());
             ClientServices = new ClientServiceRepository(_context, loggerFactory.CreateLogger<ClientServiceRepository>());
             Departments = new DepartmentRepository(_context, loggerFactory.CreateLogger<DepartmentRepository>());
