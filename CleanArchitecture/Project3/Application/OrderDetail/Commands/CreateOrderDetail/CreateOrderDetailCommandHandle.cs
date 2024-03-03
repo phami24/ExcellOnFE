@@ -24,14 +24,14 @@ namespace Application.OrderDetail.Commands.CreateOrderDetail
         {
             try
             {
-                var newOrderDetail = new Domain.Entities.OrderDetail()
+                var newCart = new Domain.Entities.OrderDetail()
                 {
                     OrderId = request.AddOrderDetailDto.OrderId,
                     ServiceChargesId = request.AddOrderDetailDto.ServiceChargesId,
 
                 };
 
-                bool isCreate = await _unitOfWork.OrderDetail.Add(newOrderDetail);
+                bool isCreate = await _unitOfWork.OrderDetail.Add(newCart);
 
                 if (isCreate)
                 {

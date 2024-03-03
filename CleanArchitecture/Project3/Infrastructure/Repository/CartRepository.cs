@@ -1,4 +1,6 @@
-﻿using Domain.Entities;
+﻿using Azure.Core;
+using Domain.Abstraction;
+using Domain.Entities;
 using Domain.Interfaces;
 using Infrastructure.Common;
 using Infrastructure.Data;
@@ -79,5 +81,26 @@ namespace Infrastructure.Repository
             }
         }
 
+        public async Task DeleteCartByClientId(int clientId)
+        {
+            try
+            {
+                var cartDetails = await _context.CartDetail
+                    .Where(cd => cd.ClientId == clientId)
+                    .ToListAsync();
+
+                _context.CartDetail.RemoveRange(cartDetails);
+
+                await _context.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                // Handle exception as needed
+                Console.WriteLine($"Error deleting cart details: {ex.Message}");
+                throw; // You may choose to handle or throw the exception
+            }
+        }
+
+       
     }
 }

@@ -46,6 +46,7 @@ namespace Application.Client.Queries.GetAllClient
                         var cartServiceChargeDto = new GetCartServiceChargeDto
                         {
                             ClientId = cartDetail.ClientId,
+                            CartId = cartDetail.CartId,
                             ServiceChargeId = cartDetail.ServiceChargeId,
                             ServiceChargesName = serviceCharge.ServiceChargesName,
                             ServiceChargesDescription = serviceCharge.ServiceChargesDescription,

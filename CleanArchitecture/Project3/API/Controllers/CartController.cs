@@ -1,4 +1,5 @@
 ﻿using Application.Cart.Commands.AddCart;
+using Application.Cart.Commands.DeleteCartByClientId;
 using Application.Cart.Commands.DeleteCartItem;
 using Application.Cart.Queries.GetCartByClientId;
 using Application.Cart.Queries.GetCartId;
@@ -101,6 +102,22 @@ namespace API.Controllers
             }
 
             return NotFound($"ServiceCharge {cartId} not found!");
+        }
+        [HttpDelete("client/{clientId}")]
+        public async Task<IActionResult> DeleteCartByClientId(int clientId)
+        {
+            var command = new DeleteCartByClientIdCommand
+            {
+                ClientId = clientId,
+            };
+            var result = await _mediator.Send(command);
+
+            if (result != null)
+            {
+                return Ok(result);
+            }
+
+            return NotFound($"ServiceCharge {clientId} not found!");
         }
     }
 }

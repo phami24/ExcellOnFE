@@ -2,6 +2,7 @@
 using Domain.Interfaces;
 using Infrastructure.Common;
 using Infrastructure.Data;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -15,6 +16,19 @@ namespace Infrastructure.Repository
     {
         public OrderDetailRepository(AppDbContext context, ILogger logger) : base(context, logger)
         {
+        }
+
+        public async Task<ICollection<OrderDetail>> GetOrderDetailsByOrderId(int orderId)
+        {
+            try
+            {
+                return await _context.OrderDetail.AsNoTracking().Where(c => c.OrderId == orderId).ToListAsync();
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, "Error occurred while getting cart by ID: {Id}", orderId);
+                return null;
+            }
         }
     }
 }

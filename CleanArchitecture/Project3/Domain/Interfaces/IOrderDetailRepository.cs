@@ -10,5 +10,6 @@ namespace Domain.Interfaces
 {
     public interface IOrderDetailRepository : IGenericRepository<OrderDetail, int>
     {
+        Task<ICollection<OrderDetail>> GetOrderDetailsByOrderId(int orderId);
     }
 }

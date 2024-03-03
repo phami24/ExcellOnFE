@@ -43,7 +43,7 @@ namespace Application.Client.Queries.GetClientById
                         Dob = clients.Dob,
                         Email = clients.Email,
                         Phone = clients.Phone,
-                        CartDetail = new List<GetCartServiceChargeDto>() // Initialize the list
+                        CartDetail = new List<GetCartServiceChargeDto>()
                     };
 
                     foreach (var cartDetail in cartDetails)
@@ -55,6 +55,7 @@ namespace Application.Client.Queries.GetClientById
                             var cartServiceChargeDto = new GetCartServiceChargeDto
                             {
                                 ClientId = cartDetail.ClientId,
+                                CartId = cartDetail.CartId,
                                 ServiceChargeId = cartDetail.ServiceChargeId,
                                 ServiceChargesName = serviceCharge.ServiceChargesName,
                                 ServiceChargesDescription = serviceCharge.ServiceChargesDescription,

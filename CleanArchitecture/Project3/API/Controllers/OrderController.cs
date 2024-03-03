@@ -1,8 +1,12 @@
 ﻿using Application.Cart.Commands.AddCart;
+using Application.Client.Commands.DeleteClient;
+using Application.Client.Queries.GetAllClient;
 using Application.DTOs.Cart;
 using Application.DTOs.Order;
 using Application.DTOs.OrderDetail;
 using Application.Order.Commands.AddOrder;
+using Application.Order.Commands.DeleteOrder;
+using Application.Order.Queries.GetOrder;
 using Application.OrderDetail.Commands.CreateOrderDetail;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -59,6 +63,29 @@ namespace API.Controllers
                 return StatusCode(500, $"An error occurred: {ex.Message}");
             }
             throw new NotImplementedException();
+        }
+        [HttpGet]
+        public async Task<IActionResult> GetOrder()
+        {
+            var orderQuery = new GetOrderQuery();
+            var orders = await _mediator.Send(orderQuery);
+            return Ok(orders);
+        }
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteOrder(int id)
+        {
+            var command = new DeleteOrderCommand()
+            {
+                OrderId = id
+            };
+            var result = await _mediator.Send(command);
+
+            if (result != null)
+            {
+                return Ok(result);
+            }
+
+            return NotFound($"Client {id} not found!");
         }
     }
 }

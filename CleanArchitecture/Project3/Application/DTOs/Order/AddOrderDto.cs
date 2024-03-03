@@ -16,6 +16,5 @@ namespace Application.DTOs.Order
         public double OrderTotal { get; set; }
 
         public int ClientId { get; set; }
-        public List<GetOrderDetailDto> OrderDetails { get; set; }
     }
 }

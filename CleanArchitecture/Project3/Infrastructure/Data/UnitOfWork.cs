@@ -43,6 +43,8 @@ namespace Infrastructure.Data
             Services = new ServiceRepository(_context, loggerFactory.CreateLogger<ServiceRepository>());
             ServicesCharges = new ServiceChargesRepository(_context, loggerFactory.CreateLogger<ServiceChargesRepository>());
             Cart = new CartRepository(_context, loggerFactory.CreateLogger<CartRepository>());
+            Order = new OrderRepository(_context, loggerFactory.CreateLogger<OrderRepository>());
+            OrderDetail = new OrderDetailRepository(_context, loggerFactory.CreateLogger<OrderDetailRepository>());
         }
 
         public async Task CompleteAsync()

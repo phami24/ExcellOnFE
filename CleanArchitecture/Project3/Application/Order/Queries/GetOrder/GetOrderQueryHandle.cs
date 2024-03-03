@@ -22,22 +22,40 @@ namespace Application.Order.Queries.GetOrder
         }
         public async Task<ICollection<GetOrderDto>> Handle(GetOrderQuery request, CancellationToken cancellationToken)
         {
-            var order = await _unitOfWork.Order.All();
-            var orderDto = new List<GetOrderDto>();
+            var orders = await _unitOfWork.Order.All();
 
-            foreach (Domain.Entities.Order c in order)
+            var orderDtos = new List<GetOrderDto>();
+
+            foreach (var order in orders)
             {
-                var orderDtos = new GetOrderDto()
+                var orderDto = new GetOrderDto
                 {
-                    OrderId = c.OrderId,
-                    ClientId = c.ClientId,
-                    OrderDate = c.OrderDate,
-                   
+                    OrderId = order.OrderId,
+                    ClientId = order.ClientId,
+                    OrderDate = order.OrderDate,
+                    OrderTotal = order.OrderTotal,
+                    OrderDetail = new List<GetOrderDetailDto>()
                 };
-                orderDto.Add(orderDtos);
+
+                // Fetch and map order details for this order
+                var orderDetails = await _unitOfWork.OrderDetail.GetOrderDetailsByOrderId(order.OrderId);
+
+                foreach (var orderDetail in orderDetails)
+                {
+                    var orderDetailDto = new GetOrderDetailDto
+                    {
+                        // Map properties from orderDetail to orderDetailDto
+                        OrderDetailId = orderDetail.OrderDetailId,
+                        ServiceChargeId = orderDetail.ServiceChargesId,
+                        OrderId = orderDetail.OrderId,
+                    };
+                    orderDto.OrderDetail.Add(orderDetailDto);
+                }
+
+                orderDtos.Add(orderDto);
             }
 
-            return orderDto;
+            return orderDtos;
         }
     }
 }

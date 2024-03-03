@@ -18,67 +18,34 @@ namespace Application.Order.Commands.AddOrder
         }
 
         public async Task<AddOrderDto> Handle(AddOrderCommand request, CancellationToken cancellationToken)
-{
-    try
-    {
-        if (request == null || request.AddOrderDto == null)
         {
-            // Handle the case where request or AddOrderDto is null
-            return null;
-        }
-
-        var newOrder = new Domain.Entities.Order()
-        {
-            ClientId = request.AddOrderDto.ClientId,
-            OrderDate = request.AddOrderDto.OrderDate,
-            OrderStatus = request.AddOrderDto.OrderStatus,
-            OrderTotal = request.AddOrderDto.OrderTotal,
-            OrderDetails = new List<Domain.Entities.OrderDetail>()
-        };
-
-        // Add order details
-        if (request.AddOrderDto.OrderDetails != null)
-        {
-            foreach (var item in request.AddOrderDto.OrderDetails)
+            try
             {
-                if (item == null || item.ServiceChargeId == null || item.OrderId == null)
+                var newOrder = new Domain.Entities.Order()
                 {
-                    continue;
-                }
-                var orderDetail = new Domain.Entities.OrderDetail()
-                {
-                    // Populate properties of order detail from DTO
-                    ServiceChargesId = item.ServiceChargeId,
-                    OrderId = item.OrderId,
+                    OrderDate = request.AddOrderDto.OrderDate,
+                    OrderStatus = request.AddOrderDto.OrderStatus,
+                    OrderTotal = request.AddOrderDto.OrderTotal,
+                    ClientId = request.AddOrderDto.ClientId,                 
                 };
 
-                // Add order detail to order
-                newOrder.OrderDetails.Add(orderDetail);
+                bool isCreate = await _unitOfWork.Order.Add(newOrder);
+
+                if (isCreate)
+                {
+                    await _unitOfWork.CompleteAsync();
+                    // Additional logic can be added here if needed
+                    return request.AddOrderDto;
+                }
+
+                return null;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+                return null;
             }
         }
-
-        // Ensure _unitOfWork is not null
-        if (_unitOfWork == null || _unitOfWork.Order == null)
-        {
-            return null;
-        }
-
-        // Add the new order to the repository
-        _unitOfWork.Order.Add(newOrder);
-
-        // Save changes
-        await _unitOfWork.CompleteAsync();
-
-        return request.AddOrderDto;
-    }
-    catch (Exception ex)
-    {
-        Console.WriteLine(ex.ToString());
-        // Log the exception here
-        // You might want to log the exception and return a meaningful error message
-        return null;
-    }
-}
 
     }
 }
