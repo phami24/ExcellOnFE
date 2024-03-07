@@ -10,9 +10,11 @@ namespace Application.DTOs.Order
 {
     public class AddOrderDto
     {
-
+        [Required]
         public DateTime OrderDate { get; set; }
+        [Required]
         public int OrderStatus { get; set; }
+        [Required]
         public double OrderTotal { get; set; }
 
         public int ClientId { get; set; }

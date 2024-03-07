@@ -16,7 +16,6 @@ namespace Application.DTOs.Service
         public string ServiceName { get; set; }
         [Required]
         public string Description { get; set; }       
-        [Required]
         public int TotalDay { get; set; }
     }
 }

@@ -25,7 +25,7 @@ namespace Domain.Entities
         [Required]
         public int ClientId { get; set; }
         public Client Client { get; set; }
-
+        [Required]
         public ICollection<OrderDetail> OrderDetails { get; set; }
     }
 }

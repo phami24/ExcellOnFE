@@ -10,9 +10,9 @@ namespace Application.DTOs.OrderDetail
 {
     public class AddOrderDetailDto
     {
-
+        [Required]
         public int OrderId { get; set; }
-
+        [Required]
         public int ServiceChargesId { get; set; }
     }
 }

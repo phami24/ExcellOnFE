@@ -1,13 +1,7 @@
-﻿using Application.Cart.Commands.AddCart;
-using Application.DTOs.Cart;
-using Application.DTOs.OrderDetail;
+﻿using Application.DTOs.OrderDetail;
 using Domain.Abstraction;
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace Application.OrderDetail.Commands.CreateOrderDetail
 {
@@ -24,14 +18,14 @@ namespace Application.OrderDetail.Commands.CreateOrderDetail
         {
             try
             {
-                var newCart = new Domain.Entities.OrderDetail()
+                var newOrder = new Domain.Entities.OrderDetail()
                 {
                     OrderId = request.AddOrderDetailDto.OrderId,
                     ServiceChargesId = request.AddOrderDetailDto.ServiceChargesId,
 
                 };
 
-                bool isCreate = await _unitOfWork.OrderDetail.Add(newCart);
+                bool isCreate = await _unitOfWork.OrderDetail.Add(newOrder);
 
                 if (isCreate)
                 {

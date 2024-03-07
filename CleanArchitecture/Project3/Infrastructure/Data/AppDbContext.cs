@@ -62,13 +62,21 @@ namespace Infrastructure.Data
                 .WithMany(s => s.ServicesCharges)
                 .HasForeignKey(sc => sc.ServiceId);
             modelBuilder.Entity<CartDetail>()
-                .HasOne(sc => sc.Client)
-                .WithMany(s => s.CartDetail)
-                .HasForeignKey(sc => sc.ClientId);
+                .HasOne(cd => cd.Client)
+                .WithMany(c => c.CartDetail)
+                .HasForeignKey(cd => cd.ClientId);
             modelBuilder.Entity<CartDetail>()
-                .HasOne(sc => sc.ServiceCharges)
-                .WithMany(s => s.CartDetail)
-                .HasForeignKey(sc => sc.ServiceChargeId);
+                .HasOne(cd => cd.ServiceCharges)
+                .WithMany(sc => sc.CartDetail)
+                .HasForeignKey(cd => cd.ServiceChargeId);
+            modelBuilder.Entity<Order>()
+               .HasMany(o => o.OrderDetails)
+               .WithOne(od => od.Order)
+               .HasForeignKey(o => o.OrderId);
+            modelBuilder.Entity<OrderDetail>()
+               .HasOne(od => od.Order)
+               .WithMany(o => o.OrderDetails)
+               .HasForeignKey(od => od.OrderId);          
             base.OnModelCreating(modelBuilder);
         }
     }

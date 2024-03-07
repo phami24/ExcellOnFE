@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Threading;
-using System.Threading.Tasks;
-using Application.DTOs.Order;
+﻿using Application.DTOs.Order;
 using Domain.Abstraction;
 using MediatR;
 
