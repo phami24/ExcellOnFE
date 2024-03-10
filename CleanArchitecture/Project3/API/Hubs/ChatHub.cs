@@ -27,6 +27,7 @@ namespace API.Hubs
             Console.WriteLine("From hubs !");
             await Clients.All.SendAsync("ReceiveMessage ", $"{Context.ConnectionId} has joinn ");
         }
+
         //{ "arguments": [1, 1], "target": "CreateGroupAndAddUsers", "type": 1}
         public async Task CreateGroupAndAddUsers(int customerId, int employeeId)
         {

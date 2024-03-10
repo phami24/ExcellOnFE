@@ -81,7 +81,7 @@ namespace Infrastructure.Repository
             try
             {
                 // Tìm kiếm các nhóm mà nhân viên có ID được cung cấp là thành viên
-                var chatGroups = await _chatGroupCollection.Find(group => group.Members.Contains(employeeId)).ToListAsync();
+                var chatGroups = await _chatGroupCollection.Find(group => group.EmployeeId.Equals(employeeId)).ToListAsync();
                 return chatGroups;
             }
             catch (Exception ex)
@@ -96,7 +96,7 @@ namespace Infrastructure.Repository
             try
             {
                 // Tìm kiếm các nhóm mà khách hàng có ID được cung cấp là thành viên
-                var chatGroups = await _chatGroupCollection.Find(group => group.Members.Contains(customerId)).ToListAsync();
+                var chatGroups = await _chatGroupCollection.Find(group => group.ClientId.Equals(customerId)).ToListAsync();
                 return chatGroups;
             }
             catch (Exception ex)
