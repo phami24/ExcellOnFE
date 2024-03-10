@@ -1,13 +1,6 @@
 ﻿using Application.DTOs.Cart;
-using Application.DTOs.ServiceCharges;
-using Application.ServiceCharges.Queries.GetServiceChargesByServiceId;
 using Domain.Abstraction;
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Application.Cart.Queries.GetCartByClientId
 {

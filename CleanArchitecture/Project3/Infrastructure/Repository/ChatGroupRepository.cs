@@ -76,5 +76,34 @@ namespace Infrastructure.Repository
             }
         }
 
+        public async Task<IEnumerable<ChatGroup>> GetGroupByEmployeeId(int employeeId)
+        {
+            try
+            {
+                // Tìm kiếm các nhóm mà nhân viên có ID được cung cấp là thành viên
+                var chatGroups = await _chatGroupCollection.Find(group => group.Members.Contains(employeeId)).ToListAsync();
+                return chatGroups;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error occurred while retrieving chat groups by employee ID: {ex.Message}");
+                return null;
+            }
+        }
+
+        public async Task<IEnumerable<ChatGroup>> GetGroupByCustomerId(int customerId)
+        {
+            try
+            {
+                // Tìm kiếm các nhóm mà khách hàng có ID được cung cấp là thành viên
+                var chatGroups = await _chatGroupCollection.Find(group => group.Members.Contains(customerId)).ToListAsync();
+                return chatGroups;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error occurred while retrieving chat groups by customer ID: {ex.Message}");
+                return null;
+            }
+        }
     }
 }

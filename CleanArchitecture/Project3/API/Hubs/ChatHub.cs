@@ -52,7 +52,6 @@ namespace API.Hubs
                     employeeUserId = employeeUser.Id;
                     Console.WriteLine("Employee Id : " + employeeUserId);
                 }
-
             }
 
             string groupName = $"{customer.ClientId}-{employee.EmployeeId}";
@@ -97,7 +96,7 @@ namespace API.Hubs
             await _messageRepository.InsertMessageAsync(newMessage);
             await Clients.Group(groupName).SendAsync("ReceiveMessage", senderName, message);
         }
-
+        //{ "arguments": [1,2], "target": "GetGroupMessage", "type": 1}
         public async Task GetGroupMessage(string groupName)
         {
             try
@@ -123,6 +122,25 @@ namespace API.Hubs
                 Console.WriteLine($"Error occurred while retrieving group messages: {ex.Message}");
             }
         }
+        public async Task GetAllGroupByEmployeeId(int employeeId)
+        {
+            try
+            {
+                var groups = await _chatGroupRepository.GetGroupByEmployeeId(employeeId);
 
+                foreach (var group in groups)
+                {
+                    if (group != null)
+                    {
+                        var groupName = group.Name;
+                        await Clients.Caller.SendAsync("ReceiveMessage", groupName);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error occurred while retrieving group messages: {ex.Message}");
+            }
+        }
     }
 }

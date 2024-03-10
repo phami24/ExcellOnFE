@@ -37,7 +37,7 @@ using (var scope = app.Services.CreateScope())
     var services = scope.ServiceProvider;
 
     SeedData.Initialize(services);
-    AuthSeedData.Initialize(services);
+    //AuthSeedData.Initialize(services);
 }
 
 
