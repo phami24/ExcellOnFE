@@ -24,12 +24,7 @@ namespace Application.Order.Queries.GetOrderById
                 {
                     return null;
                 }
-                var orderDetails = order.OrderDetails.Select(detail => new GetOrderDetailDto
-                {
-                   
-                    OrderDetailId = detail.OrderDetailId,
-                    ServiceChargeId = detail.ServiceChargesId,
-                }).ToList();
+               
 
 
                 GetOrderDto orderDto = new GetOrderDto
@@ -38,9 +33,23 @@ namespace Application.Order.Queries.GetOrderById
                     OrderDate = order.OrderDate,
                     OrderStatus = order.OrderStatus,
                     OrderTotal = order.OrderTotal,
-                    OrderDetail = orderDetails,
-                    ClientId = order.ClientId
+                    ClientId = order.ClientId,
+                    OrderDetail = new List<GetOrderDetailDto>(),
                 };
+                var orderDetails = await _unitOfWork.OrderDetail.GetOrderDetailsByOrderId(order.OrderId);
+
+                foreach (var orderDetail in orderDetails)
+                {
+                    var orderDetailDto = new GetOrderDetailDto
+                    {
+                        // Map properties from orderDetail to orderDetailDto
+                        OrderDetailId = orderDetail.OrderDetailId,
+                        ServiceChargeId = orderDetail.ServiceChargesId,
+                        OrderId = orderDetail.OrderId,
+
+                    };
+                    orderDto.OrderDetail.Add(orderDetailDto);
+                }
 
                 return orderDto;
             }
