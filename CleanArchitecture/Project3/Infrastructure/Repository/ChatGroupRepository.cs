@@ -38,7 +38,7 @@ namespace Infrastructure.Repository
         {
             try
             {
-                var group = _chatGroupCollection.Find(group => group.Name == groupName).FirstOrDefault();
+                var group = _chatGroupCollection.AsQueryable().Where(group => group.Name == groupName).FirstOrDefault();
                 if (group == null)
                 {
                     Console.WriteLine($"{groupName} is not a chat group");
@@ -58,7 +58,7 @@ namespace Infrastructure.Repository
         {
             try
             {
-                var existingGroup = await _chatGroupCollection.Find(group => group.Name == chatGroup.Name).FirstOrDefaultAsync();
+                var existingGroup = _chatGroupCollection.AsQueryable().Where(group => group.Name == chatGroup.Name).FirstOrDefault();
                 Console.WriteLine("Chat Repo ");
 
                 if (existingGroup == null)
@@ -82,6 +82,7 @@ namespace Infrastructure.Repository
             {
                 // Tìm kiếm các nhóm mà nhân viên có ID được cung cấp là thành viên
                 var chatGroups = await _chatGroupCollection.Find(group => group.EmployeeId.Equals(employeeId)).ToListAsync();
+
                 return chatGroups;
             }
             catch (Exception ex)
@@ -91,13 +92,17 @@ namespace Infrastructure.Repository
             }
         }
 
-        public async Task<IEnumerable<ChatGroup>> GetGroupByCustomerId(int customerId)
+        public ChatGroup GetGroupByCustomerId(int customerId)
         {
             try
             {
                 // Tìm kiếm các nhóm mà khách hàng có ID được cung cấp là thành viên
-                var chatGroups = await _chatGroupCollection.Find(group => group.ClientId.Equals(customerId)).ToListAsync();
-                return chatGroups;
+                var chatGroup = _chatGroupCollection.Find(group => group.ClientId.Equals(customerId)).FirstOrDefault();
+                if (chatGroup != null)
+                {
+                    return chatGroup;
+                }
+                return null;
             }
             catch (Exception ex)
             {

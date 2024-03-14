@@ -102,6 +102,7 @@ namespace Infrastructure.Services.Impl
                         if (role == "Admin" || role == "Employee")
                         {
                             var userProfile = await _unitOfWork.Employees.GetByEmail(email);
+                            var user = await _userManager.FindByEmailAsync(email);
                             var userProfileDto = new UserProfileDto()
                             {
                                 Id = userProfile.EmployeeId,
@@ -110,13 +111,15 @@ namespace Infrastructure.Services.Impl
                                 FirstName = userProfile.FirstName,
                                 LastName = userProfile.LastName,
                                 Phone = userProfile.Phone,
-                                Role = role
+                                Role = role,
+                                UserAspId = user.Id
                             };
                             return userProfileDto;
                         }
                         else if (role == "User")
                         {
                             var userProfile = await _unitOfWork.Clients.GetClientByEmail(email);
+                            var user = await _userManager.FindByEmailAsync(email);
                             var userProfileDto = new UserProfileDto()
                             {
                                 Id = userProfile.ClientId,
@@ -125,7 +128,8 @@ namespace Infrastructure.Services.Impl
                                 FirstName = userProfile.FirstName,
                                 LastName = userProfile.LastName,
                                 Phone = userProfile.Phone,
-                                Role = role
+                                Role = role,
+                                UserAspId = user.Id
                             };
                             return userProfileDto;
                         }
