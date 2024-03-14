@@ -17,6 +17,5 @@ namespace Application.DTOs.ServiceCharges
 
         public string ServiceChargesDescription { get; set; }
 
-        public int ServiceId { get; set; }
     }
 }

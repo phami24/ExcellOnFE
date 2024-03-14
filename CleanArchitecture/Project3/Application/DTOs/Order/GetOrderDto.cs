@@ -13,6 +13,7 @@ namespace Application.DTOs.Order
         public int OrderId { get; set; }
         public DateTime OrderDate { get; set; }
         public double OrderTotal { get; set; }
+        public int OrderStatus { get; set; }
         public int ClientId { get; set; }
         public ICollection<GetOrderDetailDto> OrderDetail { get; set; }
 

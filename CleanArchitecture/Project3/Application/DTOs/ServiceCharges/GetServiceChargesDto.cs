@@ -12,7 +12,7 @@ namespace Application.DTOs.ServiceCharges
     public class GetServiceChargesDto
     {
 
-        public int ServiceChargesId { get; set; }
+        public int ServiceChargeId { get; set; }
 
         public string ServiceChargesName { get; set; }
 

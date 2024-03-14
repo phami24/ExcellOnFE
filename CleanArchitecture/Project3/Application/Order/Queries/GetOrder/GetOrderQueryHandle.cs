@@ -1,14 +1,7 @@
-﻿using Application.Cart.Queries.GetCartId;
-using Application.DTOs.Cart;
-using Application.DTOs.Order;
+﻿using Application.DTOs.Order;
 using Application.DTOs.OrderDetail;
 using Domain.Abstraction;
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Application.Order.Queries.GetOrder
 {
@@ -23,6 +16,10 @@ namespace Application.Order.Queries.GetOrder
         public async Task<ICollection<GetOrderDto>> Handle(GetOrderQuery request, CancellationToken cancellationToken)
         {
             var orders = await _unitOfWork.Order.All();
+            if (orders == null)
+            {
+                return new List<GetOrderDto>();
+            }
 
             var orderDtos = new List<GetOrderDto>();
 
@@ -34,6 +31,7 @@ namespace Application.Order.Queries.GetOrder
                     ClientId = order.ClientId,
                     OrderDate = order.OrderDate,
                     OrderTotal = order.OrderTotal,
+                    OrderStatus = order.OrderStatus,
                     OrderDetail = new List<GetOrderDetailDto>()
                 };
 
@@ -48,6 +46,7 @@ namespace Application.Order.Queries.GetOrder
                         OrderDetailId = orderDetail.OrderDetailId,
                         ServiceChargeId = orderDetail.ServiceChargesId,
                         OrderId = orderDetail.OrderId,
+                       
                     };
                     orderDto.OrderDetail.Add(orderDetailDto);
                 }

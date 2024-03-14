@@ -1,10 +1,9 @@
-﻿using Application.DTOs.Order;
-using Domain.Abstraction;
+﻿using Domain.Abstraction;
 using MediatR;
 
 namespace Application.Order.Commands.AddOrder
 {
-    public class AddOrderCommmandHandle : IRequestHandler<AddOrderCommand, AddOrderDto>
+    public class AddOrderCommmandHandle : IRequestHandler<AddOrderCommand, int>
     {
         private readonly IUnitOfWork _unitOfWork;
 
@@ -13,7 +12,7 @@ namespace Application.Order.Commands.AddOrder
             _unitOfWork = unitOfWork;
         }
 
-        public async Task<AddOrderDto> Handle(AddOrderCommand request, CancellationToken cancellationToken)
+        public async Task<int> Handle(AddOrderCommand request, CancellationToken cancellationToken)
         {
             try
             {
@@ -22,7 +21,7 @@ namespace Application.Order.Commands.AddOrder
                     OrderDate = request.AddOrderDto.OrderDate,
                     OrderStatus = request.AddOrderDto.OrderStatus,
                     OrderTotal = request.AddOrderDto.OrderTotal,
-                    ClientId = request.AddOrderDto.ClientId,                 
+                    ClientId = request.AddOrderDto.ClientId,
                 };
 
                 bool isCreate = await _unitOfWork.Order.Add(newOrder);
@@ -30,18 +29,16 @@ namespace Application.Order.Commands.AddOrder
                 if (isCreate)
                 {
                     await _unitOfWork.CompleteAsync();
-                    // Additional logic can be added here if needed
-                    return request.AddOrderDto;
+                    return newOrder.OrderId;
                 }
 
-                return null;
+                return -1; 
             }
             catch (Exception ex)
             {
                 Console.WriteLine(ex.ToString());
-                return null;
+                return -1; // Or any other value to indicate failure
             }
         }
-
     }
 }

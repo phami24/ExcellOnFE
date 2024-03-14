@@ -11,5 +11,6 @@ namespace Application.DTOs.OrderDetail
         public int OrderDetailId { get; set; }
         public int OrderId { get; set; }
         public int ServiceChargeId { get; set; }
+        
     }
 }

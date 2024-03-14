@@ -1,12 +1,10 @@
-﻿using Application.Cart.Commands.AddCart;
-using Application.Client.Commands.DeleteClient;
-using Application.Client.Queries.GetAllClient;
-using Application.DTOs.Cart;
+﻿
 using Application.DTOs.Order;
 using Application.DTOs.OrderDetail;
 using Application.Order.Commands.AddOrder;
 using Application.Order.Commands.DeleteOrder;
 using Application.Order.Queries.GetOrder;
+using Application.Order.Queries.GetOrderById;
 using Application.OrderDetail.Commands.CreateOrderDetail;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -34,16 +32,23 @@ namespace API.Controllers
                     AddOrderDto = order
                 };
 
-                await _mediator.Send(command);
+                int orderId = await _mediator.Send(command);
 
-                return Ok("Order successfully.");
+                if (orderId != -1)
+                {
+                    return Ok($"Order successfully created. Order ID: {orderId}");
+                }
+                else
+                {
+                    return StatusCode(500, "Failed to create order.");
+                }
             }
             catch (Exception ex)
             {
                 return StatusCode(500, $"An error occurred: {ex.Message}");
             }
-            throw new NotImplementedException();
         }
+
         [HttpPost("order-detail")]
         public async Task<IActionResult> AddOrderDetail([FromBody] AddOrderDetailDto orderItem)
         {
@@ -71,6 +76,20 @@ namespace API.Controllers
             var orders = await _mediator.Send(orderQuery);
             return Ok(orders);
         }
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GerOrderById(int id)
+        {
+            var query = new GetOrderByIdQuery()
+            {
+                OrderId = id
+            };
+            var order = await _mediator.Send(query);
+            if (order != null)
+            {
+                return Ok(order);
+            }
+            return NotFound($"Order {id} not found!");
+        }
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteOrder(int id)
         {
@@ -85,7 +104,7 @@ namespace API.Controllers
                 return Ok(result);
             }
 
-            return NotFound($"Client {id} not found!");
+            return NotFound($"Order {id} not found!");
         }
     }
 }

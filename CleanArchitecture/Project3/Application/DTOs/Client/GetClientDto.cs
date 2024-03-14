@@ -17,6 +17,5 @@ namespace Application.DTOs.Client
         public string Dob { get; set; }
         public string Email { get; set; }
         public string Phone { get; set; }
-        public ICollection<GetCartServiceChargeDto> CartDetail { get; set; }
     }
 }

@@ -25,7 +25,7 @@ namespace Application.ServiceCharges.Queries.GetAllServiceCharges
             {
                 var serviceChargeDto = new GetServiceChargesDto()
                 {
-                    ServiceChargesId = sc.ServiceChargesId,
+                    ServiceChargeId = sc.ServiceChargesId,
                     ServiceChargesName = sc.ServiceChargesName,
                     Price = sc.Price,
                     ServiceChargesDescription = sc.ServiceChargesDescription,

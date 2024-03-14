@@ -1,5 +1,4 @@
-﻿
-using Application.DTOs.Service;
+﻿using Application.DTOs.Service;
 using MediatR;
 
 namespace Application.Service.Commands.CreateService

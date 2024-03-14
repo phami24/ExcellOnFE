@@ -31,7 +31,7 @@ namespace Application.ServiceCharges.Queries.GetServiceChargesByServiceId
                     {
                         var serviceChargeDto = new GetServiceChargesDto()
                         {
-                            ServiceChargesId = serviceCharge.ServiceChargesId,
+                            ServiceChargeId = serviceCharge.ServiceChargesId,
                             ServiceChargesName = serviceCharge.ServiceChargesName,
                             Price = serviceCharge.Price,
                             ServiceChargesDescription = serviceCharge.ServiceChargesDescription,

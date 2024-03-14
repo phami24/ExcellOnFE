@@ -33,7 +33,6 @@ namespace Application.ServiceCharges.Commands.UpdateServiceCharges
                 existingServiceCharge.ServiceChargesName = request.UpdateServiceChargesDto.ServiceChargesName;
                 existingServiceCharge.ServiceChargesDescription = request.UpdateServiceChargesDto.ServiceChargesDescription;
                 existingServiceCharge.Price = request.UpdateServiceChargesDto.Price;
-                existingServiceCharge.ServiceId = request.UpdateServiceChargesDto.ServiceId;
 
                 // Update the service charge in the repository
                 bool isUpdate = await _unitOfWork.ServicesCharges.Update(existingServiceCharge);

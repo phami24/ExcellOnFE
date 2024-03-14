@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Application.Client.Queries.GetClientById
 {
-    public class GetClientByIdQuery : IRequest<ICollection<GetClientDto>>
+    public class GetClientByIdQuery : IRequest<GetClientDto>
     {
         public int Id { get; set; }
     }

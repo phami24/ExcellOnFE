@@ -3,13 +3,7 @@ using Application.Cart.Commands.DeleteCartByClientId;
 using Application.Cart.Commands.DeleteCartItem;
 using Application.Cart.Queries.GetCartByClientId;
 using Application.Cart.Queries.GetCartId;
-using Application.Cart.Queries.GetTotalPrice;
-using Application.Client.Queries.GetAllClient;
-using Application.Client.Queries.GetTotalClient;
 using Application.DTOs.Cart;
-using Application.ServiceCharges.Commands.DeleteServiceCharges;
-using Application.ServiceCharges.Queries.GetServiceChargesByServiceId;
-using Domain.Entities;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
