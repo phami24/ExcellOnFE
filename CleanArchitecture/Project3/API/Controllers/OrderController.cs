@@ -1,9 +1,11 @@
 ﻿
+using Application.Cart.Queries.GetCartByClientId;
 using Application.DTOs.Order;
 using Application.DTOs.OrderDetail;
 using Application.Order.Commands.AddOrder;
 using Application.Order.Commands.DeleteOrder;
 using Application.Order.Queries.GetOrder;
+using Application.Order.Queries.GetOrderByClientId;
 using Application.Order.Queries.GetOrderById;
 using Application.OrderDetail.Commands.CreateOrderDetail;
 using MediatR;
@@ -68,6 +70,32 @@ namespace API.Controllers
                 return StatusCode(500, $"An error occurred: {ex.Message}");
             }
             throw new NotImplementedException();
+        }
+
+        [HttpGet]
+        [Route("getByClientId/{clientId}")]
+        public async Task<IActionResult> GetByClientId(int clientId)
+        {
+            try
+            {
+                var query = new GetOrderByClientIdQuery()
+                {
+                    ClientId = clientId
+                };
+                var cart = await _mediator.Send(query);
+                if (cart != null)
+                {
+                    return Ok(cart);
+                }
+                else
+                {
+                    return NotFound($"Client with ID {clientId} not found.");
+                }
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"An error occurred while processing the request: {ex.Message}");
+            }
         }
         [HttpGet]
         public async Task<IActionResult> GetOrder()
