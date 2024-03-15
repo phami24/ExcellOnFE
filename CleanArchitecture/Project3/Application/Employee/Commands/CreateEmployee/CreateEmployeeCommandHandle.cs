@@ -44,14 +44,20 @@ namespace Application.Employee.Commands.CreateEmployee
                     newEmployee.Avatar = "defautAvatar.png";
                 }
                 Console.WriteLine(newEmployee);
+                await _unitOfWork.CompleteAsync();
                 bool isCreate = await _unitOfWork.Employees.Add(newEmployee);
                 if (isCreate)
                 {
                     var employee = await _unitOfWork.Employees.GetByEmail(newEmployee.Email);
                     await _unitOfWork.CompleteAsync();
-                    await _unitOfWork.Departments.AddEmployee(employee, employee.DepartmentId);
-                    await _unitOfWork.CompleteAsync();
-                    return request.EmployeeDto;
+                    Console.Write(employee);
+                    if (employee != null)
+                    {
+
+                        await _unitOfWork.Departments.AddEmployee(employee, employee.DepartmentId);
+                        await _unitOfWork.CompleteAsync();
+                        return request.EmployeeDto;
+                    }
                 }
 
                 return null;

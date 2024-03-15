@@ -52,6 +52,7 @@ namespace API.Hubs
                 Console.WriteLine("Group null ");
             }
         }
+
         public async Task AddUserConnectionId(string email)
         {
             Console.WriteLine($" Adding user : {email}");
@@ -76,7 +77,7 @@ namespace API.Hubs
                         SenderId = sender.Id
                     };
                     await _messageRepository.InsertMessageAsync(newMessage);
-                    await Clients.Group(message.GroupName).SendAsync("ReciveMessage", message);
+                    await Clients.All.SendAsync("ReciveMessage", message);
                 }
             }
         }

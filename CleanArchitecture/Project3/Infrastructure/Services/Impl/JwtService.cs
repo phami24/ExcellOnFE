@@ -60,7 +60,7 @@ namespace Infrastructure.Services.Impl
 
             return jwtToken;
         }
-
+        
         public async Task<UserProfileDto> GetProfileByJwt(string token)
         {
             try
@@ -103,7 +103,7 @@ namespace Infrastructure.Services.Impl
                         {
                             var userProfile = await _unitOfWork.Employees.GetByEmail(email);
                             var user = await _userManager.FindByEmailAsync(email);
-                            var userProfileDto = new UserProfileDto()
+                         var userProfileDto = new UserProfileDto()
                             {
                                 Id = userProfile.EmployeeId,
                                 Email = userProfile.Email,

@@ -20,7 +20,7 @@ namespace Application.Cart.Queries.GetCartByClientId
                 var cartDetails = await _unitOfWork.Cart.GetCartById(request.Id);
                 List<GetCartServiceChargeDto> serviceChargesDto = new List<GetCartServiceChargeDto>();
 
-                foreach (var cartDetail in cartDetails)
+                foreach (var cartDetail in  cartDetails)
                 {
                     var serviceCharge = await _unitOfWork.ServicesCharges.GetById(cartDetail.ServiceChargeId);
 

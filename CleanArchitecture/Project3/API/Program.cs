@@ -1,4 +1,5 @@
 //using API.Hubs;
+using API.Hubs;
 using Application;
 using Infrastructure;
 using Infrastructure.Config;
