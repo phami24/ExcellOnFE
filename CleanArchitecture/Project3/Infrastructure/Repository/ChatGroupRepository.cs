@@ -36,21 +36,13 @@ namespace Infrastructure.Repository
 
         public string GetIdByName(string groupName)
         {
-            try
+            var group = _chatGroupCollection.AsQueryable().FirstOrDefault(group => group.Name == groupName);
+            if (group == null)
             {
-                var group = _chatGroupCollection.AsQueryable().Where(group => group.Name == groupName).FirstOrDefault();
-                if (group == null)
-                {
-                    Console.WriteLine($"{groupName} is not a chat group");
-                }
-                return group.Id.ToString();
-
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Error occurred while retrieving chat group ID: {ex.Message}");
+                Console.WriteLine($"{groupName} is not a chat group");
                 return null;
             }
+            return group.Id.ToString();
         }
 
 
