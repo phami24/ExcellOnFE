@@ -1,10 +1,14 @@
 ﻿using Application.Client.Commands.CreateClient;
 using Application.DTOs.Auth;
+using Application.DTOs.Chat;
 using Application.DTOs.Client;
 using Application.DTOs.Employee;
 using Application.DTOs.Response.AuthResponse;
 using Application.Employee.Commands.CreateEmployee;
 using Azure.Core;
+using Domain.Abstraction;
+using Domain.Entities;
+using Infrastructure.Repository;
 using Infrastructure.Services;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
@@ -19,12 +23,16 @@ namespace API.Controllers
         private readonly IMediator _mediator;
         private readonly UserManager<IdentityUser> _userManager;
         private readonly IJwtService _jwtService;
+        private readonly ChatGroupRepository _chatGroupRepository;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public AuthController(IMediator mediator, UserManager<IdentityUser> userManager, IJwtService jwtService)
+        public AuthController(IUnitOfWork unitOfWork, IMediator mediator, UserManager<IdentityUser> userManager, IJwtService jwtService,ChatGroupRepository chatGroupRepository)
         {
             _mediator = mediator;
             _userManager = userManager;
             _jwtService = jwtService;
+            _chatGroupRepository = chatGroupRepository;
+            _unitOfWork = unitOfWork;
         }
 
         [HttpPost]
@@ -181,6 +189,22 @@ namespace API.Controllers
                 if (isPasswordValid)
                 {
                     var token = await _jwtService.GenerateJwtTokenAsync(existingUser);
+                    Random number = new Random();
+                    int totalEmployee = await _unitOfWork.Employees.Count();
+                    var randomEmpId = number.Next(1, totalEmployee);
+                    var client = await _unitOfWork.Clients.GetClientByEmail(existingUser.Email);
+                    var groupName = randomEmpId+ "-" +existingUser.Id.ToString();
+                    string exittingGroup =  _chatGroupRepository.GetIdByName(groupName);
+                    if(exittingGroup == null)
+                    {
+                        var newGroup = new ChatGroup()
+                        {
+                            Name = groupName,
+                            ClientId = client.ClientId,
+                            EmployeeId = randomEmpId
+                        };
+                        await _chatGroupRepository.InsertChatGroupAsync(newGroup);
+                    }
                     return Ok(new LoginResponseDto()
                     {
                         Result = true,
