@@ -4,7 +4,9 @@ using Application;
 using Infrastructure;
 using Infrastructure.Config;
 using Infrastructure.Data;
+using Infrastructure.Services;
 using Infrastructure.Services.Impl;
+using Microsoft.Extensions.DependencyInjection;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,6 +16,7 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
 builder.Services
     .AddApplication()
     .AddInFrastructure(builder.Configuration);
@@ -33,6 +36,11 @@ builder.Services.AddCors(options =>
         policy.AllowAnyMethod();
     });
 });
+
+
+builder.Services.Configure<EmailSetting>(builder.Configuration.GetSection("MailSetting"));
+builder.Services.AddTransient<IEmailService, EmailService>();
+
 builder.Services.AddLogging();
 var app = builder.Build();
 

@@ -54,6 +54,6 @@ namespace Infrastructure.Repository
                 _logger.LogError(e, "Error while getting clients by name");
                 throw; // You may want to handle the exception more gracefully based on your application's requirements.
             }
-        }
+        }   
     }
 }

@@ -15,7 +15,6 @@ using Microsoft.AspNetCore.Mvc;
 namespace API.Controllers
 {
     [Route("api/[controller]")]
-    [Authorize(Roles = "Admin,Employee")]
     public class ClientController : ControllerBase
     {
         private readonly IMediator _mediator;
@@ -25,7 +24,8 @@ namespace API.Controllers
             _mediator = mediator;
         }
 
-        [HttpGet]       
+        [HttpGet]
+        [Authorize(Roles = "Admin,Employee")]
         public async Task<IActionResult> GetAllClients()
         {
             var clientQuery = new GetAllClientQuery();
@@ -34,6 +34,7 @@ namespace API.Controllers
         }
 
         [HttpGet("{id}")]
+        [Authorize(Roles = "Admin,Employee")]
         public async Task<IActionResult> GetClientById(int id)
         {
             var query = new GetClientByIdQuery()
@@ -49,6 +50,7 @@ namespace API.Controllers
         }
         
         [HttpPut("{id}")]
+        [Authorize(Roles = "Admin,Employee,User")]
         public async Task<IActionResult> UpdateClient( [FromBody] UpdateClientDto updateClientDto)
         {
             try
@@ -89,6 +91,7 @@ namespace API.Controllers
 
 
         [HttpDelete("{id}")]
+        [Authorize(Roles = "Admin,Employee")]
         public async Task<IActionResult> DeleteClient(int id)
         {
             var command = new DeleteClientCommand() 

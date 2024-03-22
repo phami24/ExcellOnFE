@@ -1,11 +1,14 @@
-﻿using Application.Client.Commands.CreateClient;
+﻿using Amazon.Runtime.Internal.Util;
+using Application.Client.Commands.CreateClient;
 using Application.DTOs.Auth;
 using Application.DTOs.Chat;
 using Application.DTOs.Client;
 using Application.DTOs.Employee;
 using Application.DTOs.Response.AuthResponse;
 using Application.Employee.Commands.CreateEmployee;
+using Application.ForgotPassword.Commands.ForgotPassword;
 using Azure.Core;
+using CloudinaryDotNet.Actions;
 using Domain.Abstraction;
 using Domain.Entities;
 using Infrastructure.Repository;
@@ -13,6 +16,7 @@ using Infrastructure.Services;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Caching.Memory;
 
 namespace API.Controllers
 {
@@ -25,14 +29,17 @@ namespace API.Controllers
         private readonly IJwtService _jwtService;
         private readonly ChatGroupRepository _chatGroupRepository;
         private readonly IUnitOfWork _unitOfWork;
+        private readonly IMemoryCache _cache;
 
-        public AuthController(IUnitOfWork unitOfWork, IMediator mediator, UserManager<IdentityUser> userManager, IJwtService jwtService,ChatGroupRepository chatGroupRepository)
+
+        public AuthController(IUnitOfWork unitOfWork, IMediator mediator, UserManager<IdentityUser> userManager, IJwtService jwtService,ChatGroupRepository chatGroupRepository, IMemoryCache cache)
         {
             _mediator = mediator;
             _userManager = userManager;
             _jwtService = jwtService;
             _chatGroupRepository = chatGroupRepository;
             _unitOfWork = unitOfWork;
+            _cache = cache;
         }
 
         [HttpPost]
@@ -213,6 +220,60 @@ namespace API.Controllers
                 }
             }
             return BadRequest("Invalid request payload !");
+        }
+
+        [HttpPost]
+        [Route("send-mail")]
+        public async Task<IActionResult> ForgotPassword([FromBody] ForgotPasswordCommand command)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            try
+            {
+                await _mediator.Send(command);
+                return Ok("Password reset email sent successfully.");
+            }
+            catch (Exception ex)
+            {
+                // Log the exception
+                return StatusCode(500, "An error occurred while processing your request.");
+            }
+        }
+        [HttpPost("confirm-otp")]
+        public async Task<IActionResult> ConfirmOTP([FromBody] OTPConfirmationModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            if (_cache.TryGetValue(model.Email, out string storedOTP))
+            {
+                if (model.OTP == storedOTP)
+                {
+                    // OTP is confirmed, generate a new JWT token
+                    var existingUser = await _userManager.FindByEmailAsync(model.Email);
+                    if (existingUser != null)
+                    {
+                        var token = await _jwtService.GenerateJwtTokenAsync(existingUser);
+                        return Ok(new LoginResponseDto()
+                        {
+                            Result = true,
+                            Token = token.ToString()
+                        });
+                    }
+                    else
+                    {
+                        return BadRequest("User not found.");
+                    }
+                }
+            }
+
+            // OTP is not valid or expired
+            return BadRequest("Invalid or expired OTP");
         }
 
 
